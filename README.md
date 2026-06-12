@@ -8,6 +8,15 @@
   面向高教社杯 / CUMCM 风格竞赛的数学建模 skill 包：把题面理解、建模、复现、图表、摘要、排版和最终审查连接到同一条证据链。
 </p>
 
+<p align="center">
+  <img alt="license: MIT" src="https://img.shields.io/badge/license-MIT-2ea44f.svg" />
+  <img alt="focus: CUMCM / Math Modeling" src="https://img.shields.io/badge/focus-CUMCM%20%2F%20Math%20Modeling-f97316.svg" />
+  <img alt="mode: on demand" src="https://img.shields.io/badge/mode-on--demand-2563eb.svg" />
+  <img alt="evidence: driven" src="https://img.shields.io/badge/evidence-driven-0f766e.svg" />
+  <img alt="human: in the loop" src="https://img.shields.io/badge/human-in--the--loop-7c3aed.svg" />
+  <img alt="AI use: disclosure aware" src="https://img.shields.io/badge/AI%20use-disclosure%20aware-6d28d9.svg" />
+</p>
+
 ---
 
 ## 定位
