@@ -1,0 +1,1 @@
+figure_id,problem_id,claim_id,paper_role,figure_path,figure_type,plot_family,plot_type,why_this_plot,scenario,metric,unit,source_table,source_script,run_id,baseline_or_threshold,uncertainty_or_error,constraint_status,caption,post_figure_conclusion,validation_status,risk_note,data_source,notes

@@ -1,0 +1,4 @@
+interface:
+  display_name: "竞赛合规与提交"
+  short_description: "检查规则、匿名、AI 披露和提交包"
+  default_prompt: "使用 $math-compliance 按国一候选提交质量核查官方规则、匿名性、claim-level AI disclosure、可复现证据、提交包内容和清单状态；保留规则边界，并 return findings to math-hub。"

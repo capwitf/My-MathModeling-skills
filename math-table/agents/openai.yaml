@@ -1,0 +1,7 @@
+interface:
+  display_name: "符号表与结果表"
+  short_description: "修复符号、单位、来源和表格可读性"
+  default_prompt: "使用 $math-table 按国一候选表格质量修复或审查符号、含义、定义域、单位、来源和首用位置；未知或冲突单位必须作为证据边界阻塞，不能用排版占位隐藏。"
+
+policy:
+  allow_implicit_invocation: true

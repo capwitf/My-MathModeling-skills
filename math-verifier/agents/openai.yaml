@@ -1,0 +1,4 @@
+interface:
+  display_name: "数学核验"
+  short_description: "核验公式、单位、约束、边界和可行性措辞"
+  default_prompt: "使用 $math-verifier 按国一候选证据质量核验量纲一致性、边界案例、公式回代、可行性措辞和 math_verification.csv 行；发现公式、单位、约束或边界阻塞时 return blockers to math-hub。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Contest Review"
+  short_description: "从评委视角审查证据、扣分风险、可读性和边界"
+  default_prompt: "使用 $math-review 按国一候选标准审查论文：分类 P0/P1/P2/P3 风险，映射评分维度，检查 claim/evidence、创新、图表、可复现、可读性、阅读成本、逻辑跳跃和边界问题，给出最小修复项并返回 math-hub；return to math-hub。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "竞赛一致性审查"
+  short_description: "审查摘要、正文、表图和支撑材料一致性"
+  default_prompt: "使用 $math-consistency 按国一候选标准比对摘要、正文、表格、图、附录、claim/result/figure/run 记录、数学核验、数值诊断、代码/支撑材料复现和最终 AI 披露材料；发现证据、单位、场景或边界漂移时 return findings to math-hub。"

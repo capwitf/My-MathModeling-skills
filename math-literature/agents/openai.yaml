@@ -1,0 +1,4 @@
+interface:
+  display_name: "Contest Literature"
+  short_description: "Verify sources, standards, and claim citations"
+  default_prompt: "Use $math-literature for lightweight 高教社杯/CUMCM source work: search planning, citation verification, standards/policy/parameter provenance, DOI/BibTeX checks, and claim-to-citation maps. Keep 国一候选 证据 quality, do not fabricate sources, and preserve support 边界; Chinese prose is for paper-facing deliverables."

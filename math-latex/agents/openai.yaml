@@ -1,0 +1,4 @@
+interface:
+  display_name: "竞赛 LaTeX 排版"
+  short_description: "保持官方模板并修复三线表、多图、长公式、伪代码和 PDF 可读性"
+  default_prompt: "使用 $math-latex 按国一候选排版质量保持官方模板，修复三线表、多图并列、长公式断行、伪代码、浮动体和图表密度问题，排布有证据支撑的公式、表格和图，编译并检查 PDF；遇到页数、匿名、附录、单独 AI 使用说明、可读性或边界风险未解决时阻塞最终结论并返回 math-hub。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Contest Abstract"
+  short_description: "Draft or audit judge-friendly abstracts"
+  default_prompt: "Use $math-abstract to diagnose, draft, or audit 高教社杯/CUMCM modeling abstracts and keywords. Apply 国一候选 first-page quality, subproblem coverage, number budget, 证据/evidence gates, and 边界/boundary checks; Chinese abstract prose is paper-facing, while registries/status fields may stay English."

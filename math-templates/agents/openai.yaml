@@ -1,0 +1,4 @@
+interface:
+  display_name: "Math Modeling Templates"
+  short_description: "Reusable contest paper assets and light scaffolds"
+  default_prompt: "Use $math-templates for lightweight 高教社杯/CUMCM paper assets, style controls, paragraph phrases, code/plot scaffolds, registries, and reproduction helpers. Keep national-first/国一候选 quality gates for 题目贴合, 建模洞察, 证据可信, 可复现, 边界清楚; Chinese is for paper-facing deliverables, while technical English fields, filenames, algorithms, and rule text may remain English."

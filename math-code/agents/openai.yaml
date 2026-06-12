@@ -1,0 +1,4 @@
+interface:
+  display_name: "竞赛代码与复现"
+  short_description: "复现计算与仿真，诊断数值稳定性并输出证据表图"
+  default_prompt: "使用 $math-code 按国一候选证据质量实现建模交接：复现计算或仿真，生成有证据支撑的表格和图，更新 run/result/figure/numerical diagnostics 记录；仿真任务记录状态轨迹、事件日志、重复实验、随机种子、步长/网格敏感性和诊断表；模糊输出保持 diagnostic-only，保留边界说明，并 return blockers or output status to math-hub。"
