@@ -6,6 +6,8 @@ Use this scope for 高教社杯/CUMCM and similar mathematical modeling contests
 
 Support the paper enough for judges to trust the modeling context, method choice, parameters, standards, and external comparisons. Do not spend contest time building a journal-style systematic review unless the problem explicitly asks for it.
 
+If literature is being used to create the solution route rather than verify paper citations, return the route-search need to `math-hub`. This file governs the citation layer after the route or source need is known.
+
 ## Enough For Contest Use
 
 For most contest papers, aim for:

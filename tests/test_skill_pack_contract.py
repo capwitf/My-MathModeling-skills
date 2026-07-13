@@ -1177,7 +1177,10 @@ class SkillPackContractTest(unittest.TestCase):
             "sensitivity_tornado.py",
         ]
 
-        self.assertEqual(sorted(path.name for path in template_dir.glob("*.py")), expected_templates)
+        self.assertEqual(
+            sorted(path.name for path in template_dir.glob("*.py")),
+            sorted(expected_templates + ["paper_style.py"]),
+        )
         self.assert_contains_all(
             index,
             [

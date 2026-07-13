@@ -9,6 +9,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from paper_style import CONTEST_PAPER_COLORS, apply_paper_style, configure_paper_matplotlib
+
 
 def save_outputs(fig: plt.Figure, output_base: Path | str) -> list[Path]:
     output_base = Path(output_base)
@@ -30,14 +32,32 @@ def plot_pareto_frontier(
     x_label: str | None = None,
     y_label: str | None = None,
 ) -> list[Path]:
+    configure_paper_matplotlib()
     frame = data.sort_values(x).reset_index(drop=True)
     fig, ax = plt.subplots(figsize=(6.8, 4.6), dpi=220)
-    ax.plot(frame[x], frame[y], color="#4C78A8", linewidth=1.8, marker="o", markersize=4, label="candidate frontier")
+    ax.plot(
+        frame[x],
+        frame[y],
+        color=CONTEST_PAPER_COLORS["accent_blue"],
+        linewidth=1.8,
+        marker="o",
+        markersize=4,
+        label="candidate frontier",
+    )
 
     if selected is not None and selected in frame.columns:
         chosen = frame.loc[frame[selected].astype(bool)]
         if not chosen.empty:
-            ax.scatter(chosen[x], chosen[y], s=90, color="#C44E52", edgecolor="white", linewidth=1.0, zorder=4, label="selected")
+            ax.scatter(
+                chosen[x],
+                chosen[y],
+                s=90,
+                color=CONTEST_PAPER_COLORS["accent_orange"],
+                edgecolor="white",
+                linewidth=1.0,
+                zorder=4,
+                label="selected",
+            )
 
     if label is not None and label in frame.columns:
         for _, item in frame.iterrows():
@@ -45,7 +65,7 @@ def plot_pareto_frontier(
 
     ax.set_xlabel(x_label or x)
     ax.set_ylabel(y_label or y)
-    ax.grid(color="#DDDDDD", linewidth=0.6)
+    apply_paper_style(ax, grid_axis="both")
     ax.legend(frameon=False)
     fig.tight_layout()
     paths = save_outputs(fig, output_base)

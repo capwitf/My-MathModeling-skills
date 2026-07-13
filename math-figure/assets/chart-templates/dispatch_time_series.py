@@ -9,6 +9,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from paper_style import CONTEST_PAPER_COLORS, apply_paper_style, configure_paper_matplotlib, get_series_colors
+
 
 def save_outputs(fig: plt.Figure, output_base: Path | str) -> list[Path]:
     output_base = Path(output_base)
@@ -30,18 +32,26 @@ def plot_dispatch_time_series(
     y_label: str = "Power",
     state_label: str = "State",
 ) -> list[Path]:
+    configure_paper_matplotlib()
     frame = data.sort_values(time)
     fig, ax = plt.subplots(figsize=(8.2, 4.8), dpi=220)
-    ax.stackplot(frame[time], *[frame[col] for col in supply_columns], labels=supply_columns, alpha=0.82)
-    ax.plot(frame[time], frame[demand_column], color="#263238", linewidth=2.0, label=demand_column)
+    ax.stackplot(
+        frame[time],
+        *[frame[col] for col in supply_columns],
+        labels=supply_columns,
+        colors=get_series_colors(len(supply_columns)),
+        alpha=0.78,
+    )
+    ax.plot(frame[time], frame[demand_column], color=CONTEST_PAPER_COLORS["main_text"], linewidth=2.0, label=demand_column)
     ax.set_xlabel(time)
     ax.set_ylabel(y_label)
-    ax.grid(axis="y", color="#DDDDDD", linewidth=0.6)
+    apply_paper_style(ax, grid_axis="y")
 
     if state_column is not None and state_column in frame.columns:
         ax2 = ax.twinx()
-        ax2.plot(frame[time], frame[state_column], color="#C44E52", linewidth=1.8, linestyle="--", label=state_column)
+        ax2.plot(frame[time], frame[state_column], color=CONTEST_PAPER_COLORS["accent_red"], linewidth=1.8, linestyle="--", label=state_column)
         ax2.set_ylabel(state_label)
+        apply_paper_style(ax2, grid_axis="y", hide_top_right=False)
         handles1, labels1 = ax.get_legend_handles_labels()
         handles2, labels2 = ax2.get_legend_handles_labels()
         ax.legend(handles1 + handles2, labels1 + labels2, frameon=False, ncol=2, loc="upper left")

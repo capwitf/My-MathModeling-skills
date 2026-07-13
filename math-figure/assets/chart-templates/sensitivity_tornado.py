@@ -9,6 +9,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from paper_style import CONTEST_PAPER_COLORS, apply_paper_style, configure_paper_matplotlib
+
 
 def save_outputs(fig: plt.Figure, output_base: Path | str) -> list[Path]:
     output_base = Path(output_base)
@@ -29,6 +31,7 @@ def plot_sensitivity_tornado(
     output_base: Path | str,
     x_label: str = "Change from baseline",
 ) -> list[Path]:
+    configure_paper_matplotlib()
     frame = data.copy()
     frame["low_delta"] = frame[low].astype(float) - baseline
     frame["high_delta"] = frame[high].astype(float) - baseline
@@ -37,13 +40,13 @@ def plot_sensitivity_tornado(
 
     fig, ax = plt.subplots(figsize=(7.2, 4.8), dpi=220)
     y_positions = range(len(frame))
-    ax.barh(y_positions, frame["low_delta"], color="#72B7B2", alpha=0.85, label="low case")
-    ax.barh(y_positions, frame["high_delta"], color="#C44E52", alpha=0.85, label="high case")
-    ax.axvline(0, color="#263238", linewidth=1.1)
+    ax.barh(y_positions, frame["low_delta"], color=CONTEST_PAPER_COLORS["accent_teal"], alpha=0.85, label="low case")
+    ax.barh(y_positions, frame["high_delta"], color=CONTEST_PAPER_COLORS["accent_orange"], alpha=0.85, label="high case")
+    ax.axvline(0, color=CONTEST_PAPER_COLORS["main_text"], linewidth=1.1)
     ax.set_yticks(list(y_positions))
     ax.set_yticklabels(frame[parameter])
     ax.set_xlabel(x_label)
-    ax.grid(axis="x", color="#DDDDDD", linewidth=0.6)
+    apply_paper_style(ax, grid_axis="x")
     ax.legend(frameon=False, loc="lower right")
     fig.tight_layout()
     paths = save_outputs(fig, output_base)

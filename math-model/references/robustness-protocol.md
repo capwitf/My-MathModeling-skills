@@ -21,6 +21,8 @@ Use this reference when a modeling route needs a validation tier or robustness p
 | Ranking, evaluation, TOPSIS, AHP, entropy weights | weight perturbation, indicator deletion, rank flip count, threshold margin |
 | Prediction feeding a decision | train/validation separation, forecast error interval, error-to-scenario propagation, decision-impact table |
 | Geometry, physics, or simulation | step-size or grid sensitivity, boundary/extreme cases, key size/angle/position perturbation |
+| Monte Carlo convergence | pilot run variance, confidence half-width or relative half-width, seed-block or batch-means stability, replication increase rule |
+| Calibrated simulation | parameter fit table, calibration error, holdout or back-test, decision impact of fitted-parameter uncertainty |
 | Policy or system impact analysis | scale/penetration stress, synchronized vs diversified scenario, peak/ramp/shortage pressure metrics |
 | Pure explanation or proof-style subquestion | boundary counterexample search, assumption-loss statement, formula back-substitution |
 

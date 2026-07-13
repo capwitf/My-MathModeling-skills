@@ -7,8 +7,11 @@ import matplotlib
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
 import numpy as np
 import pandas as pd
+
+from paper_style import CONTEST_PAPER_COLORS, apply_paper_style, configure_paper_matplotlib
 
 
 def save_outputs(fig: plt.Figure, output_base: Path | str) -> list[Path]:
@@ -31,13 +34,22 @@ def plot_relative_change_heatmap(
     value_label: str = "Relative change (%)",
     annotate: bool = True,
 ) -> list[Path]:
+    configure_paper_matplotlib()
     pivot = data.pivot(index=row, columns=column, values=value)
     matrix = pivot.to_numpy(dtype=float)
     max_abs = float(np.nanmax(np.abs(matrix - baseline))) if matrix.size else 1.0
     max_abs = max(max_abs, 1e-12)
 
     fig, ax = plt.subplots(figsize=(7.2, 4.8), dpi=220)
-    image = ax.imshow(matrix, cmap="RdBu_r", vmin=baseline - max_abs, vmax=baseline + max_abs, aspect="auto")
+    cmap = LinearSegmentedColormap.from_list(
+        "contest_diverging",
+        [
+            CONTEST_PAPER_COLORS["accent_blue"],
+            "white",
+            CONTEST_PAPER_COLORS["accent_orange"],
+        ],
+    )
+    image = ax.imshow(matrix, cmap=cmap, vmin=baseline - max_abs, vmax=baseline + max_abs, aspect="auto")
     ax.set_xticks(range(len(pivot.columns)))
     ax.set_xticklabels(pivot.columns, rotation=35, ha="right")
     ax.set_yticks(range(len(pivot.index)))
@@ -51,8 +63,18 @@ def plot_relative_change_heatmap(
         for i in range(matrix.shape[0]):
             for j in range(matrix.shape[1]):
                 if np.isfinite(matrix[i, j]):
-                    ax.text(j, i, f"{matrix[i, j]:.1f}", ha="center", va="center", fontsize=7)
+                    ax.text(
+                        j,
+                        i,
+                        f"{matrix[i, j]:.1f}",
+                        ha="center",
+                        va="center",
+                        fontsize=7,
+                        color=CONTEST_PAPER_COLORS["main_text"],
+                    )
 
+    apply_paper_style(ax, grid_axis="both")
+    ax.title.set_visible(False)
     fig.tight_layout()
     paths = save_outputs(fig, output_base)
     plt.close(fig)

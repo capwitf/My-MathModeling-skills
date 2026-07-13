@@ -9,6 +9,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from paper_style import CONTEST_PAPER_COLORS, apply_paper_style, configure_paper_matplotlib
+
 
 def save_outputs(fig: plt.Figure, output_base: Path | str) -> list[Path]:
     output_base = Path(output_base)
@@ -28,15 +30,19 @@ def plot_feasibility_diagnostics(
     output_base: Path | str,
     y_label: str = "Maximum violation",
 ) -> list[Path]:
+    configure_paper_matplotlib()
     frame = data.copy().sort_values(violation, ascending=False)
-    colors = ["#C44E52" if value > threshold else "#72B7B2" for value in frame[violation].astype(float)]
+    colors = [
+        CONTEST_PAPER_COLORS["accent_red"] if value > threshold else CONTEST_PAPER_COLORS["accent_teal"]
+        for value in frame[violation].astype(float)
+    ]
 
     fig, ax = plt.subplots(figsize=(7.4, 4.8), dpi=220)
     ax.barh(frame[scenario], frame[violation], color=colors, alpha=0.88)
-    ax.axvline(threshold, color="#263238", linewidth=1.2, linestyle="--", label="threshold")
+    ax.axvline(threshold, color=CONTEST_PAPER_COLORS["main_text"], linewidth=1.2, linestyle="--", label="threshold")
     ax.set_xlabel(y_label)
     ax.set_ylabel(scenario)
-    ax.grid(axis="x", color="#DDDDDD", linewidth=0.6)
+    apply_paper_style(ax, grid_axis="x")
     ax.legend(frameon=False)
     fig.tight_layout()
     paths = save_outputs(fig, output_base)

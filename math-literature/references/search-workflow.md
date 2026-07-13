@@ -4,6 +4,8 @@
 
 Start from the paper need, not from generic keywords.
 
+This workflow verifies sources for paper claims. If the active need is to find modeling ideas, baseline schemes, transferable variables, or route candidates before the model is chosen, record the route-search need and return it to `math-hub`; return only citation candidates here for verification.
+
 1. Extract the modeling object: grid, traffic, logistics, epidemic, reservoir, energy storage, scheduling, routing, allocation, risk, or policy.
 2. Extract the modeling action: optimization, prediction, simulation, evaluation, classification, control, dispatch, planning, or sensitivity analysis.
 3. Extract the evidence need: method precedent, parameter source, baseline, dataset, standard, policy, limitation, or application context.
