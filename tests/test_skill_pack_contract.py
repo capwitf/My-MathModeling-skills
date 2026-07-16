@@ -13,6 +13,7 @@ REVIEWED_SKILLS = [
     "math-hub",
     "math-latex",
     "math-literature",
+    "math-writing",
     "math-model",
     "math-review",
     "math-table",
@@ -847,6 +848,45 @@ class SkillPackContractTest(unittest.TestCase):
             ],
         )
 
+    def test_writing_skill_owns_paper_facing_prose_and_raw_output_guards(self):
+        writing = read("math-writing/SKILL.md")
+        guard = read("math-writing/references/paper-facing-text-guard.md")
+        templates = read("math-writing/references/writing-templates.md")
+        result_analysis = read("math-writing/references/result-analysis-writing.md")
+
+        self.assert_contains_all(
+            writing,
+            [
+                "paper-facing prose",
+                "raw-output",
+                "evidence gaps",
+                "math-model",
+                "math-figure",
+                "math-consistency",
+                "math-latex",
+                "Return to hub: math-hub",
+            ],
+        )
+        self.assert_contains_all(
+            guard,
+            [
+                "final prose",
+                "evidence material",
+                "diagnostic material",
+                "raw console output",
+                "conclusion",
+                "boundary",
+            ],
+        )
+        self.assert_contains_all(
+            templates,
+            ["问题重述", "模型假设", "问题分析与思路概述", "模型评价、改进与推广"],
+        )
+        self.assert_contains_all(
+            result_analysis,
+            ["conclusion", "evidence", "comparison", "mechanism", "boundary"],
+        )
+
     def test_templates_skill_adds_reusable_contest_project_assets(self):
         hub = read("math-hub/SKILL.md")
         templates = read("math-templates/SKILL.md")
@@ -1588,7 +1628,7 @@ class SkillPackContractTest(unittest.TestCase):
     def test_national_first_boundary_reaches_every_math_skill(self):
         required_terms = ["国一候选", "不承诺获奖", "题目贴合", "建模洞察", "证据可信", "可复现", "边界清楚"]
 
-        for skill in [name for name in REVIEWED_SKILLS if name not in {"math-model", "math-figure"}]:
+        for skill in [name for name in REVIEWED_SKILLS if name not in {"math-model", "math-figure", "math-writing"}]:
             with self.subTest(skill=skill):
                 self.assert_contains_all(read(f"{skill}/SKILL.md"), required_terms)
                 self.assert_contains_all(read(f"{skill}/agents/openai.yaml"), ["国一候选", "证据", "边界"])

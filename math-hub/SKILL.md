@@ -176,7 +176,7 @@ Rules for these fields:
 - `Metrics/budget gate` reports the smallest useful dashboard numbers or says which metrics are unknown -> blocked.
 - `Compliance gate` must mention official-rule source status, page/format constraints, anonymity, appendix/code/support files, and AI-use disclosure risk.
 - `QC summary fields` must report or explicitly mark unknown: `subquestions_covered`, `deliverables_missing`, `units_consistency`, `notation_consistency`, `similarity_risk`, `score_risk`, `table_count`, and `figure_count`.
-- `Allowed next module` is one of: stay in hub QC, `math-model`, `math-verifier`, `math-code`, `math-figure`, `math-abstract`, `math-latex`, `math-table`, `math-consistency`, `math-review`, `math-compliance`, `math-literature`, `math-templates`, or dispatch mode.
+- `Allowed next module` is one of: stay in hub QC, `math-model`, `math-verifier`, `math-code`, `math-figure`, `math-abstract`, `math-latex`, `math-table`, `math-consistency`, `math-review`, `math-compliance`, `math-literature`, `math-writing`, `math-templates`, or dispatch mode.
 
 If any required field is unknown, write `unknown -> blocked` or `unknown -> diagnostic only`; do not omit the field.
 
@@ -234,6 +234,7 @@ Use `references/artifacts-schema.md` when schemas, statuses, or blocking rules m
 - Judge-facing cross-audit, scoring-risk mapping, innovation scrutiny, likely judge questions, open P0/P1/P2 findings: `math-review`.
 - Official rules, anonymity, AI-use disclosure, support files, code reproducibility, final manifest, package readiness: `math-compliance`.
 - Literature search, citation verification, source-grounded related work, DOI/BibTeX checks, and claim-to-reference mapping: `math-literature`.
+- Paper-facing prose, result analysis, model evaluation wording, and raw-output guards: `math-writing`.
 - New project scaffolding, reusable compute/plot/test/paper templates, evidence registry templates, and stale-template audits: `math-templates`.
 - Explicit dispatch or global decomposition: architect/planner lane, then `dag.md`.
 
