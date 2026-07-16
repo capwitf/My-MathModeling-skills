@@ -1,4 +1,0 @@
-interface:
-  display_name: "Contest Literature"
-  short_description: "Verify sources, standards, and claim citations"
-  default_prompt: "Use $math-literature for 国一候选 source search, citation verification, DOI/BibTeX checks, standards, parameters, and claim-to-citation maps; 保留证据边界。"

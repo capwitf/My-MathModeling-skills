@@ -12,7 +12,7 @@ REVIEWED_SKILLS = [
     "math-figure",
     "math-hub",
     "math-latex",
-    "math-literature",
+    "math-writing",
     "math-model",
     "math-review",
     "math-table",
@@ -772,79 +772,43 @@ class SkillPackContractTest(unittest.TestCase):
             ],
         )
 
-    def test_literature_skill_adds_source_grounded_search_contract(self):
-        hub = read("math-hub/SKILL.md")
-        schema = read("math-hub/references/artifacts-schema.md")
-        literature = read("math-literature/SKILL.md")
-        scope = read("math-literature/references/contest-scope.md")
-        search = read("math-literature/references/search-workflow.md")
-        tiers = read("math-literature/references/source-tiers.md")
-        citation = read("math-literature/references/citation-evidence-contract.md")
+    def test_writing_skill_owns_paper_facing_prose_and_raw_output_guards(self):
+        writing = read("math-writing/SKILL.md")
+        guard = read("math-writing/references/paper-facing-text-guard.md")
+        templates = read("math-writing/references/writing-templates.md")
+        result_analysis = read("math-writing/references/result-analysis-writing.md")
 
         self.assert_contains_all(
-            literature,
+            writing,
             [
-                "literature_search_log.csv",
-                "reference_registry.csv",
-                "claim_citation_map.csv",
-                "不要编造论文",
-                "高教社杯/CUMCM",
-                "Return unresolved source gaps to `math-hub`",
+                "paper-facing prose",
+                "raw-output",
+                "evidence gaps",
+                "math-model",
+                "math-figure",
+                "math-consistency",
+                "math-latex",
+                "Return to hub: math-hub",
             ],
         )
         self.assert_contains_all(
-            scope,
+            guard,
             [
-                "Enough For Contest Use",
-                "2-5 high-quality references",
-                "reference_notes.md",
-                "Do not spend contest time",
+                "final prose",
+                "evidence material",
+                "diagnostic material",
+                "raw console output",
+                "conclusion",
+                "boundary",
             ],
         )
         self.assert_contains_all(
-            search,
-            [
-                "Contest Modeling Query Patterns",
-                "Energy system",
-                "Chinese contest context",
-                "search_id,source,query,date_checked",
-            ],
+            templates,
+            ["问题重述", "模型假设", "问题分析与思路概述", "模型评价、改进与推广"],
         )
         self.assert_contains_all(
-            tiers,
-            [
-                "T1",
-                "CrossRef",
-                "arXiv",
-                "CNKI/Wanfang",
-                "manual confirmation",
-            ],
-        )
-        self.assert_contains_all(
-            citation,
-            [
-                "Paper-Ready Citation Rules",
-                "method_precedent",
-                "parameter_source",
-                "claim_citation_map.csv",
-            ],
-        )
-        self.assert_contains_all(
-            hub,
-            [
-                "math-literature",
-                "claim_citation_map.csv.status=paper_ready",
-                "reference_registry.csv.status=verified or paper_ready",
-            ],
-        )
-        self.assert_contains_all(
-            schema,
-            [
-                "literature_search_log.csv",
-                "reference_registry.csv",
-                "claim_citation_map.csv",
-                "Paper-ready wording",
-            ],
+            result_analysis,
+            ["conclusion", "evidence", "comparison", "mechanism", "boundary"],
         )
 
     def test_templates_skill_adds_reusable_contest_project_assets(self):
@@ -1588,7 +1552,7 @@ class SkillPackContractTest(unittest.TestCase):
     def test_national_first_boundary_reaches_every_math_skill(self):
         required_terms = ["国一候选", "不承诺获奖", "题目贴合", "建模洞察", "证据可信", "可复现", "边界清楚"]
 
-        for skill in [name for name in REVIEWED_SKILLS if name not in {"math-model", "math-figure"}]:
+        for skill in [name for name in REVIEWED_SKILLS if name not in {"math-model", "math-figure", "math-writing"}]:
             with self.subTest(skill=skill):
                 self.assert_contains_all(read(f"{skill}/SKILL.md"), required_terms)
                 self.assert_contains_all(read(f"{skill}/agents/openai.yaml"), ["国一候选", "证据", "边界"])
