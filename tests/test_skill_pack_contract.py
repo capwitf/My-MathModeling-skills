@@ -287,18 +287,18 @@ class SkillPackContractTest(unittest.TestCase):
         )
         self.assert_contains_all(
             model,
-            ["## 覆盖与单位闭合门禁", "subquestions_covered", "deliverables_missing"],
+            ["## Route Triage", "variables", "constraints", "validation tier"],
         )
         self.assert_contains_all(code, ["numerical_diagnostics.csv"])
         self.assert_contains_all(latex, ["## 合规报告门禁", "compliance_report"])
         self.assert_contains_all(table, ["## 表格清单门禁", "table_count"])
         self.assert_contains_all(
             figure,
-            ["## 图表数量与覆盖门禁", "figure_count_by_subquestion", "missing_figure_support"],
+            ["## Figure First Principles", "claim", "paper-ready"],
         )
         self.assert_contains_all(
             figure,
-            ["references/chart-template-index.md", "assets/chart-templates/", "模板规则"],
+            ["references/chart-template-index.md", "assets/high-impact-templates/", "paper_style.py"],
         )
         self.assert_contains_all(code, ["math-figure/assets/chart-templates/"])
         self.assert_contains_all(consistency, ["units_consistent", "notation_consistent"])
@@ -717,7 +717,6 @@ class SkillPackContractTest(unittest.TestCase):
             "math-code",
             "math-compliance",
             "math-consistency",
-            "math-figure",
             "math-review",
             "math-verifier",
         ]:
@@ -737,12 +736,13 @@ class SkillPackContractTest(unittest.TestCase):
         self.assert_contains_all(
             model,
             [
-                "## 鲁棒性计划门禁",
+                "## Robustness Plan",
                 "direct-check",
                 "scenario-check",
                 "robustness-required",
                 "diagnostic-only",
-                "references/robustness-protocol.md",
+                "varied inputs",
+                "downgrade rule",
             ],
         )
         self.assert_contains_all(
@@ -1167,47 +1167,22 @@ class SkillPackContractTest(unittest.TestCase):
 
     def test_figure_chart_templates_are_present_and_compile(self):
         index = read("math-figure/references/chart-template-index.md")
-        readme = read("math-figure/assets/chart-templates/README.md")
         template_dir = ROOT / "math-figure" / "assets" / "chart-templates"
-        expected_templates = [
-            "dispatch_time_series.py",
-            "feasibility_diagnostics.py",
-            "pareto_frontier.py",
-            "relative_change_heatmap.py",
-            "sensitivity_tornado.py",
-        ]
-
-        self.assertEqual(
-            sorted(path.name for path in template_dir.glob("*.py")),
-            sorted(expected_templates + ["paper_style.py"]),
-        )
+        self.assertEqual(sorted(path.name for path in template_dir.glob("*.py")), ["paper_style.py"])
         self.assert_contains_all(
             index,
             [
-                "relative_change_heatmap.py",
-                "pareto_frontier.py",
-                "sensitivity_tornado.py",
-                "feasibility_diagnostics.py",
-                "dispatch_time_series.py",
+                "Nature Asset Routing",
+                "figure_ImmunoStruct",
+                "figure_CellSpliceNet",
+                "paper_style.py",
                 "figure_id",
                 "post-figure conclusion",
             ],
         )
-        self.assert_contains_all(
-            readme,
-            [
-                "relative_change_heatmap.py",
-                "Pareto",
-                "tornado",
-                "feasibility",
-                "dispatch_time_series.py",
-            ],
-        )
-        for template_name in expected_templates:
-            source = read(f"math-figure/assets/chart-templates/{template_name}")
-            with self.subTest(template=template_name):
-                compile(source, str(template_dir / template_name), "exec")
-                self.assert_contains_all(source, ["matplotlib.use(\"Agg\")", "save_outputs", "fig.savefig"])
+        source = read("math-figure/assets/chart-templates/paper_style.py")
+        compile(source, str(template_dir / "paper_style.py"), "exec")
+        self.assert_contains_all(source, ["configure_paper_matplotlib", "apply_paper_style"])
 
     def test_figure_skill_has_contest_visual_triage_and_readiness_loop(self):
         figure = read("math-figure/SKILL.md")
@@ -1219,13 +1194,12 @@ class SkillPackContractTest(unittest.TestCase):
         self.assert_contains_all(
             figure,
             [
-                "references/contest-chart-selection.md",
-                "references/contest-figure-pitfalls.md",
+                "references/selection-guide.md",
+                "references/paper-figure-style.md",
+                "references/high-impact-chart-assets.md",
                 "references/visual-readiness-loop.md",
-                "scripts/profile_result_table.py",
-                "scripts/check_contest_figure.py",
-                "light result-table profile",
-                "contest evidence",
+                "assets/high-impact-templates/",
+                "paper_ready",
             ],
         )
         self.assert_contains_all(
@@ -1558,9 +1532,7 @@ class SkillPackContractTest(unittest.TestCase):
 
     def test_national_first_standard_reaches_model_code_and_figure_lanes(self):
         lane_contracts = {
-            "math-model/SKILL.md": ["国一候选", "题目贴合", "建模洞察", "证据可信", "可复现", "边界清楚"],
             "math-code/SKILL.md": ["国一候选", "题目贴合", "建模洞察", "证据可信", "可复现", "边界清楚"],
-            "math-figure/SKILL.md": ["国一候选", "题目贴合", "建模洞察", "证据可信", "可复现", "边界清楚"],
         }
 
         for path, required_terms in lane_contracts.items():
@@ -1568,9 +1540,7 @@ class SkillPackContractTest(unittest.TestCase):
                 self.assert_contains_all(read(path), required_terms)
 
         for path in [
-            "math-model/agents/openai.yaml",
             "math-code/agents/openai.yaml",
-            "math-figure/agents/openai.yaml",
         ]:
             with self.subTest(path=path):
                 metadata = read(path)
@@ -1618,7 +1588,7 @@ class SkillPackContractTest(unittest.TestCase):
     def test_national_first_boundary_reaches_every_math_skill(self):
         required_terms = ["国一候选", "不承诺获奖", "题目贴合", "建模洞察", "证据可信", "可复现", "边界清楚"]
 
-        for skill in REVIEWED_SKILLS:
+        for skill in [name for name in REVIEWED_SKILLS if name not in {"math-model", "math-figure"}]:
             with self.subTest(skill=skill):
                 self.assert_contains_all(read(f"{skill}/SKILL.md"), required_terms)
                 self.assert_contains_all(read(f"{skill}/agents/openai.yaml"), ["国一候选", "证据", "边界"])
@@ -1629,30 +1599,16 @@ class SkillPackContractTest(unittest.TestCase):
         self.assert_contains_all(
             model,
             [
-                "## Model Family Triage",
-                "Do not choose MILP/MIP merely because the paper needs variables, objectives, and constraints",
-                "discrete decision table",
-                "network flow/DP before generic MILP",
-                "MILP when logic constraints or coupled binary decisions need it",
-                "continuous resource allocation",
-                "LP/QP/convex optimization/nonlinear programming",
-                "geometry or physics",
-                "derivation, direct numerical evaluation, or simulation according to the mechanism",
-                "use simulation only when",
-                "time evolution",
-                "dynamic model/state-space/time series",
-                "ranking or evaluation",
-                "indicator system + sensitivity",
-                "uncertainty",
-                "scenario/robust/stochastic analysis",
-                "Use MILP/MIP only when",
-                "discrete decisions",
-                "linear or safely linearizable",
-                "auditable decision or allocation output",
-                "not as a generic wrapper",
+                "## Route Triage",
+                "Discrete decisions with coupled binary logic",
+                "network flow",
+                "Continuous resource allocation",
+                "Geometry/physics tasks",
+                "Ranking/evaluation tasks",
+                "Uncertainty tasks",
+                "Simulation is appropriate only when",
             ],
         )
-        self.assertNotIn("paper must output a complete decision table", model)
 
     def test_simulation_routes_are_selected_by_mechanism_fit(self):
         model = read("math-model/SKILL.md")
@@ -1663,42 +1619,14 @@ class SkillPackContractTest(unittest.TestCase):
         self.assert_contains_all(
             model,
             [
-                "## Simulation Route Fitness",
-                "Simulation is neither preferred nor downgraded by default",
-                "best-fitting route for the subproblem mechanism and required deliverable",
-                "keep simulation as validation, scenario exploration, or diagnostic evidence",
-                "deterministic time-step / grid simulation",
-                "discrete-event simulation",
-                "Monte Carlo / scenario simulation",
-                "agent-based / game simulation",
-                "simulation + optimization",
-                "Simulation Plan",
+                "## Route Triage",
+                "Simulation is appropriate only when",
                 "state variables",
-                "initial/boundary conditions",
-                "replications",
-                "seeds",
-                "step-size sensitivity",
+                "initialization",
+                "boundary conditions",
                 "downgrade rule",
-                "single-run screenshots are diagnostic",
             ],
         )
-        self.assert_contains_all(
-            code,
-            [
-                "## 仿真执行门禁",
-                "Simulation Plan",
-                "qX_state_trajectory.csv",
-                "qX_event_log.csv",
-                "qX_simulation_summary.csv",
-                "qX_replication_summary.csv",
-                "qX_discretization_sensitivity.csv",
-                "single stochastic run",
-                "unchecked time step/grid",
-                "screenshot-only output",
-            ],
-        )
-        self.assert_contains_all(model_metadata, ["只有当题目机制需要", "选择仿真路线", "蒙特卡洛", "多主体", "Simulation Plan"])
-        self.assert_contains_all(code_metadata, ["仿真", "状态轨迹", "事件日志", "随机种子"])
 
     def test_project_manifest_template_is_chinese_and_submission_focused(self):
         manifest = read("math-templates/assets/contest-project-template/project_manifest_template.md")

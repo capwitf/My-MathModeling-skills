@@ -1,6 +1,6 @@
 # High-Impact Chart Assets
 
-Use this reference when a contest figure needs stronger visual form than the lightweight local templates provide. It inherits useful parts of GitHub `Yuan1z0825/nature-skills`, `nature-figure v2.0.0`, checked at commit `5d2ba1d` on 2026-06-20.
+Use this reference when a contest figure needs stronger visual form than the lightweight local templates provide. It inherits useful parts of GitHub `Yuan1z0825/nature-skills`, initially from `nature-figure v2.0.0` commit `5d2ba1d`, and synchronizes the selected asset shelf with `main` commit `b98b53e` on 2026-07-14.
 
 ## Contest evidence gate
 
@@ -9,8 +9,14 @@ Apply the contest evidence gate first: define the claim, source table, metric, u
 ## Local inherited assets
 
 - `assets/high-impact-templates/chart-atlas/`: 10 atlas PNGs covering common high-impact chart families.
-- `assets/high-impact-templates/figures4papers/`: 24 Python template scripts plus bundled previews from the Nature demo shelf. Use them as pattern only references for layout, axis treatment, annotation, legend placement, and export behavior.
+- `assets/high-impact-templates/figures4papers/`: 27 Python template scripts plus bundled previews from the Nature demo shelf. Use them as pattern only references for layout, axis treatment, annotation, legend placement, and export behavior.
 - `assets/chart-templates/paper_style.py`: local distilled API helpers for contest data, including `PALETTE`, `DEFAULT_COLORS`, `apply_publication_style`, `add_panel_label`, `make_grouped_bar`, `make_trend`, `make_heatmap`, `make_forest_plot`, and `finalize_figure`.
+
+## Current synced additions
+
+- `figure_CellSpliceNet/plot_comparison_cross_species.py`: multi-metric grouped comparison with uncertainty, reusable for cross-region, cross-dataset, or cross-scenario evaluation.
+- `figure_VIGIL/plot_ablation.py`: three-panel data-fraction and hyperparameter ablation curves, reusable for robustness and sensitivity evidence.
+- `figure_VIGIL/plot_concept.py`: distribution-plus-manifold concept layout, reusable only when a mechanism or latent-space claim needs an explanatory figure.
 
 ## What to borrow
 

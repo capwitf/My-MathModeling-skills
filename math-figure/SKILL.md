@@ -9,9 +9,7 @@ description: Use when 高教社杯/CUMCM 数学建模论文需要规划、选择
 
 Select, generate, or review figures that prove a claim. Main-body figures must carry mechanism, comparison, robustness, or decision evidence; diagnostic and dense support figures default to appendix.
 
-For a `paper_ready` promotion, final gate, or cross-module handoff, apply the current `math-hub` evidence rules. Local chart choice or visual repair can stay lightweight.
-
-国一候选门槛：图表必须同时体现题目贴合、建模洞察、证据可信、可复现、边界清楚；这是提交质量门槛，不承诺获奖。
+Read the project's shared quality contract only when promoting a figure to paper-ready, classifying blocked status, running a final gate, or writing a cross-module handoff. Local chart choice or visual repair can stay lightweight.
 
 ## Figure First Principles
 
@@ -43,11 +41,7 @@ For simulation figures, raw traces stay appendix unless they directly prove a re
 
 Read `references/selection-guide.md` for chart selection, `references/paper-figure-style.md` for Nature-style palette, title, and formal-paper figure defaults, `references/high-impact-chart-assets.md` when local templates are visually or structurally too weak, `references/visual-readiness-loop.md` for visual inspection, and `math-hub/references/figure-evidence-rules.md` when figure evidence rows matter.
 
-For an unprofiled result table, run `scripts/profile_result_table.py` to create a light result-table profile before chart selection. Use `references/contest-chart-selection.md` for contest evidence routing, `references/contest-figure-pitfalls.md` before accepting a chart package, and `scripts/check_contest_figure.py` for saved-file readiness checks.
-
-When a requested figure matches a reusable contest chart family, read `references/chart-template-index.md`, apply `references/paper-figure-style.md`, and adapt a script from `assets/chart-templates/` after the claim, source output, unit, and evidence boundary are known. If local templates are too weak, route through `assets/high-impact-templates/` using `references/high-impact-chart-assets.md`. Treat templates as starting assets, not proof; every adapted figure still needs source, caption, `post_figure_conclusion`, risk note, and validation status.
-
-模板规则：模板是可复用绘图资产，不是证据；每次适配都必须保留来源、单位和验证边界。
+When a requested figure matches a reusable chart family, read `references/chart-template-index.md`, apply `references/paper-figure-style.md`, and adapt the closest script from `assets/high-impact-templates/` after the claim, source output, unit, and evidence boundary are known. Use `assets/chart-templates/paper_style.py` when a claim needs a bespoke matplotlib chart rather than a vendored Nature pattern. Treat templates as starting assets, not proof; every adapted figure still needs source, caption, `post_figure_conclusion`, risk note, and validation status.
 
 For main-body figures, read `references/paper-figure-style.md` and use the Nature-style contest defaults: calm `palette`, vector-first export, `no in-figure title`, light grid, readable labels, and a single claim sentence before plotting. Use `assets/chart-templates/paper_style.py` when writing matplotlib code.
 
@@ -56,10 +50,6 @@ For main-body figures, read `references/paper-figure-style.md` and use the Natur
 Inspect saved figures before labeling them paper-ready. Block or demote when text is unreadable, labels are clipped, units are missing, legends conflict, colors obscure groups, axes mislead, marks overlap, or the figure does not answer its claim.
 
 For final evidence rows, keep `figure_id`, `render_check_status`, `human_visual_check`, and `visual_check_note` traceable to the saved file. Use the experiment output path until the claim, caption, units, and readability checks clear; only then copy or reference it as a paper figure.
-
-## 图表数量与覆盖门禁
-
-Report `figure_count` and `figure_count_by_subquestion` separately for main-body and appendix figures. Record `missing_figure_support` only where a chart proves a required trend, mechanism, robustness, or feasibility point better than a table; do not inflate the count with diagnostics.
 
 ## Output Contract
 

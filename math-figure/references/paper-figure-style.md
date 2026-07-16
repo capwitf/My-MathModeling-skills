@@ -8,7 +8,7 @@ Inherit the useful Nature-style discipline: calm palette, strong figure contract
 
 ## Style asset
 
-Use `assets/chart-templates/paper_style.py` for matplotlib figures when possible. Copy it with the selected chart template, or copy the `CONTEST_PAPER_COLORS` values into the active project when a single-file script is required. Use `main_text` for main text and `grid` for light reading guides. For high-impact patterns, use `PALETTE`, `DEFAULT_COLORS`, `apply_publication_style`, and the helper functions summarized in `references/high-impact-chart-assets.md`.
+Use `assets/chart-templates/paper_style.py` for bespoke matplotlib figures when possible. Copy it with the adapted Nature pattern, or copy the `CONTEST_PAPER_COLORS` values into the active project when a single-file script is required. Use `main_text` for main text and `grid` for light reading guides. For high-impact patterns, use `PALETTE`, `DEFAULT_COLORS`, `apply_publication_style`, and the helper functions summarized in `references/high-impact-chart-assets.md`.
 
 `CONTEST_PAPER_COLORS`:
 

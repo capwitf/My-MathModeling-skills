@@ -24,13 +24,15 @@ Use this guide when deciding what figure to generate for a contest paper.
 
 ## Reusable Template Assets
 
-For common chart families, start from `references/chart-template-index.md` and the scripts in `assets/chart-templates/`:
+For common chart families, start from `references/chart-template-index.md` and the Nature patterns in `assets/high-impact-templates/figures4papers/`:
 
-- relative-change heatmap for scenario or method deltas;
-- Pareto/frontier for tradeoffs and selected policies;
-- tornado chart for one-way sensitivity;
-- feasibility diagnostics for violations and solver health;
-- dispatch time series for schedules, routes, storage states, or power balance.
+- grouped bars or multi-metric panels for scenario and method comparison;
+- curves and ablation panels for sensitivity and robustness;
+- heatmaps or matrices for scenario-method structure;
+- surfaces and geometry panels for mechanisms or spatial structure;
+- distributions for diagnostics and data-composition claims.
+
+When no Nature pattern matches a Pareto frontier, feasibility diagnostic, or dispatch sequence, write the smallest claim-specific chart with `assets/chart-templates/paper_style.py` instead of starting from a generic demo template.
 
 ## Tie-Breaking Rules
 

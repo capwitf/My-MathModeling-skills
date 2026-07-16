@@ -1,4 +1,4 @@
 interface:
   display_name: "竞赛建模"
   short_description: "锁定分问交付物、变量、约束、仿真/优化路线、验证和交接"
-  default_prompt: "使用 $math-model 锁定国一候选的变量、约束、单位、路线、验证、鲁棒性和 model_handoff；以证据和边界约束结论。只有当题目机制需要时才选择仿真路线，并写明蒙特卡洛、多主体或其他 Simulation Plan；代码需要猜参数、单位或 schema 时阻塞。"
+  default_prompt: "使用 $math-model 锁定变量、约束、单位、路线、验证、鲁棒性和 model_handoff；代码需要猜参数、单位或 schema 时阻塞。"

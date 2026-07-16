@@ -9,21 +9,19 @@ description: Use when 高教社杯/CUMCM 数学建模任务需要变量、假设
 
 Turn the locked problem brief into a problem-driven model route: variables, constraints, assumptions, units, objective/mechanism, validation, robustness plan, result schema, and code handoff.
 
-For a `paper_ready` promotion, final gate, or cross-module handoff, apply the current `math-hub` evidence rules. For exploratory model sketches, keep the boundary local.
-
-国一候选门槛：建模输出必须同时体现题目贴合、建模洞察、证据可信、可复现、边界清楚；这是提交质量门槛，不承诺获奖。
+Read the project's shared quality contract only when promoting a route to paper-ready, classifying blocked status, preparing a final gate, or writing a cross-module handoff. For exploratory model sketches, keep the boundary local and do not load the shared contract by default.
 
 Do not choose an algorithm because it sounds advanced. First state what mathematical problem the subquestion is, then choose the simplest route that can answer the required deliverable.
 
 ## Required Inputs
 
-- `problem_brief.md` and `deliverable_matrix.csv`, or an equivalent current lock from `math-problem-reader`/`math-hub`;
+- `problem_brief.md` and `deliverable_matrix.csv`, or an equivalent current problem lock from the intake/hub lane;
 - active subquestion, input data, assumptions, limits, and expected output;
 - known units, source files, and official constraints;
 - `research_brief.md` or `method_source_matrix.csv` when the route was literature-informed or when multiple source-backed candidate routes were scouted;
 - prior model version if this is a revision.
 
-If these are missing, return to `math-problem-reader` or `math-hub` instead of inventing the task.
+If these are missing, return to the problem-intake or hub lane instead of inventing the task.
 
 ## Modeling Flow
 
@@ -31,7 +29,7 @@ If these are missing, return to `math-problem-reader` or `math-hub` instead of i
 2. Name the mechanism or mathematical family before naming software or algorithms.
 3. Define variables, domains, units, assumptions, objective, constraints, and boundary conditions.
 4. Select one main route; keep secondary methods subordinate.
-5. If source scouting produced candidates, compare their task fit, data fit, validation burden, and citation boundary before selecting the main route.
+5. If prior research produced candidates, compare their task fit, data fit, validation burden, and citation boundary before selecting the main route.
 6. Add a baseline or reference scheme before advanced claims.
 7. Define validation tier: direct check, scenario check, robustness-required, or diagnostic-only.
 8. Write the result schema and paper figure/table plan.
@@ -39,37 +37,19 @@ If these are missing, return to `math-problem-reader` or `math-hub` instead of i
 
 Record method choice rationale with evidence id, baseline defect, and boundary: do not copy AI suggestions or write only "works better"; name the data, PoC, baseline failure, and condition under which the chosen route is valid.
 
-## Model Family Triage
+## Route Triage
 
-Do not choose MILP/MIP merely because the paper needs variables, objectives, and constraints. Start from the mechanism and use the least unsupported machinery.
-
-- A discrete decision table with coupled binary logic may use MILP/MIP, but never as a generic wrapper.
-- Flow, assignment, scheduling, and staged decisions should consider network flow/DP before generic MILP; use MILP when logic constraints or coupled binary decisions need it.
-- A continuous resource allocation problem should consider LP/QP/convex optimization/nonlinear programming according to structure.
-- A geometry or physics task needs derivation, direct numerical evaluation, or simulation according to the mechanism.
-- A time evolution problem may require a dynamic model/state-space/time series route.
-- A ranking or evaluation task needs an indicator system + sensitivity.
-- Uncertainty tasks need scenario/robust/stochastic analysis.
-
-Use MILP/MIP only when discrete decisions are linear or safely linearizable and the deliverable needs an auditable decision or allocation output, not as a generic wrapper.
-
-For any dynamic route, use simulation only when its state evolution or event mechanism is needed by the deliverable.
-
-## Simulation Route Fitness
-
-Simulation is neither preferred nor downgraded by default. Select it only when it is the best-fitting route for the subproblem mechanism and required deliverable; otherwise keep simulation as validation, scenario exploration, or diagnostic evidence.
-
-- `deterministic time-step / grid simulation`: state evolution, conservation, or spatial fields.
-- `discrete-event simulation`: queues, arrivals, service, failures, or resource events.
-- `Monte Carlo / scenario simulation`: uncertainty propagation and distributional output.
-- `agent-based / game simulation`: interacting actors and local rules.
-- `simulation + optimization`: policy evaluation coupled to an auditable decision search.
-
-A `Simulation Plan` names state variables, initial/boundary conditions, horizon or step size, replications, seeds, baseline, invariant checks, step-size sensitivity, output schema, and a downgrade rule. Raw or single-run screenshots are diagnostic and cannot support paper-ready wording.
+- Discrete decisions with coupled binary logic may use MILP/MIP, but never as a generic wrapper.
+- Flow, assignment, scheduling, and staged decisions should consider network flow, DP, or greedy/baseline logic before generic MILP.
+- Continuous resource allocation should consider LP/QP/convex/nonlinear programming according to structure.
+- Geometry/physics tasks need derivation, direct numerical evaluation, or simulation according to the mechanism.
+- Ranking/evaluation tasks need indicator design, weighting rationale, and sensitivity.
+- Uncertainty tasks need scenario, robust, stochastic, or sensitivity analysis.
+- Simulation is appropriate only when time evolution, events, queues, Monte Carlo uncertainty, agents, or spatial/temporal discretization are part of the problem mechanism.
 
 For simulation, include state variables, initialization, boundary conditions, event rules, seeds/replications when stochastic, calibration/back-test when data allow it, and a downgrade rule when sensitivity fails.
 
-## 鲁棒性计划门禁
+## Robustness Plan
 
 Every subquestion needs a validation tier:
 
@@ -79,8 +59,6 @@ Every subquestion needs a validation tier:
 - `diagnostic-only`: check reduces uncertainty but cannot support final wording.
 
 A robustness plan must name varied inputs, tested range, baseline, stability metric, pass/fail criterion, and downgrade rule.
-
-Read `references/robustness-protocol.md` for route-specific checks.
 
 ## PoC Gate
 
@@ -116,16 +94,12 @@ Before paper-ready promotion, provide enough structure for `math-verifier`:
 
 If these are missing, keep the route `blocked` or `diagnostic-only`.
 
-## 覆盖与单位闭合门禁
-
-Before handing a model to code or writing, publish `subquestions_covered` and `deliverables_missing`. Each required subquestion must map to a model section, result schema, validation action, and paper-facing conclusion status. Each variable, parameter, objective term, constraint term, and reported metric needs a unit or an explicit dimensionless label; uncovered deliverables remain `blocked` or `diagnostic-only`.
-
 ## Output Contract
 
 Return:
 
 - model route and why it fits the subquestion;
-- source-backed route rationale and adaptation boundary when literature scouting was used;
+- source-backed route rationale and adaptation boundary when prior research was used;
 - variables, constraints, units, assumptions, and objective/mechanism;
 - validation tier and robustness plan;
 - result schema and figure/table plan;

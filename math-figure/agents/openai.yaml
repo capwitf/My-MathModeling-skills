@@ -1,4 +1,4 @@
 interface:
   display_name: "图表证据"
   short_description: "选择、生成和审查正式论文图表证据"
-  default_prompt: "使用 $math-figure 选择、生成或审查国一候选图表证据；正文图先套 paper-figure-style，绑定 claim、source、caption、post_figure_conclusion 和 validation_status，保留边界，并 return 到 math-hub。"
+  default_prompt: "使用 $math-figure 选择、生成或审查图表证据；正文图先套 paper-figure-style，绑定 claim、source、caption、post_figure_conclusion 和 validation_status。"
