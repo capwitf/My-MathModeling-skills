@@ -176,7 +176,7 @@ Rules for these fields:
 - `Metrics/budget gate` reports the smallest useful dashboard numbers or says which metrics are unknown -> blocked.
 - `Compliance gate` must mention official-rule source status, page/format constraints, anonymity, appendix/code/support files, and AI-use disclosure risk.
 - `QC summary fields` must report or explicitly mark unknown: `subquestions_covered`, `deliverables_missing`, `units_consistency`, `notation_consistency`, `similarity_risk`, `score_risk`, `table_count`, and `figure_count`.
-- `Allowed next module` is one of: stay in hub QC, `math-model`, `math-verifier`, `math-code`, `math-figure`, `math-abstract`, `math-latex`, `math-table`, `math-consistency`, `math-review`, `math-compliance`, `math-writing`, `math-templates`, or dispatch mode.
+- `Allowed next module` is one of: stay in hub QC, `math-model`, `math-verifier`, `math-code`, `math-figure`, `math-abstract`, `math-latex`, `math-table`, `math-consistency`, `math-review`, `math-compliance`, `math-literature`, `math-templates`, or dispatch mode.
 
 If any required field is unknown, write `unknown -> blocked` or `unknown -> diagnostic only`; do not omit the field.
 
@@ -233,7 +233,7 @@ Use `references/artifacts-schema.md` when schemas, statuses, or blocking rules m
 - Cross-artifact value, unit, scenario, figure/table/abstract/body/appendix, and validation-status consistency: `math-consistency`.
 - Judge-facing cross-audit, scoring-risk mapping, innovation scrutiny, likely judge questions, open P0/P1/P2 findings: `math-review`.
 - Official rules, anonymity, AI-use disclosure, support files, code reproducibility, final manifest, package readiness: `math-compliance`.
-- Literature search, citation verification, source-grounded related work, DOI/BibTeX checks, and claim-to-reference mapping stay in hub QC; route verified source notes and paper-facing citation wording to `math-writing`.
+- Literature search, citation verification, source-grounded related work, DOI/BibTeX checks, and claim-to-reference mapping: `math-literature`.
 - New project scaffolding, reusable compute/plot/test/paper templates, evidence registry templates, and stale-template audits: `math-templates`.
 - Explicit dispatch or global decomposition: architect/planner lane, then `dag.md`.
 
@@ -265,7 +265,7 @@ For every important citation-backed literature or method-context claim, require:
 
 `claim_citation_map.csv.status=paper_ready -> reference_registry.csv.status=verified or paper_ready -> verified source metadata -> boundary of what the source supports`
 
-For ordinary contest background, a compact verified reference note is acceptable when it does not carry a parameter, standard, policy, public-data, baseline, or method-validity claim. Keep source verification in hub QC when background, method precedent, parameter provenance, baseline, data source, DOI/BibTeX, or related-work wording is the active blocker; send the verified wording to `math-writing`.
+For ordinary contest background, a compact verified reference note is acceptable when it does not carry a parameter, standard, policy, public-data, baseline, or method-validity claim. Use `math-literature` when background, method precedent, parameter provenance, baseline, data source, DOI/BibTeX, or related-work wording is the active blocker.
 
 For every AI-assisted section or output when disclosure is required, require:
 
@@ -331,7 +331,7 @@ Stop and return to hub QC or the named module when any red flag appears:
 | A formula, unit, boundary condition, or feasibility word is unchecked | Keep claim candidate; return to `math-verifier` |
 | Abstract, body, figure, table, appendix, or registry values disagree | Block promotion; return to `math-consistency` |
 | A figure is attractive but not tied to one claim and one result source | Demote to appendix/diagnostic or rebuild figure evidence |
-| A citation is searched but not verified, or supports a broader claim than the source allows | Keep the paragraph candidate in hub QC; return verified wording to `math-writing` |
+| A citation is searched but not verified, or supports a broader claim than the source allows | Keep the paragraph candidate; return to `math-literature` |
 | A reused template still contains old contest values, paths, scenario labels, or conclusions | Block final writing/package use; return to `math-templates` or `math-consistency` |
 | A formal conclusion uses candidate, relaxed, stale, or unchecked output | Remove the conclusion and update `claim_ledger.csv` |
 | Official format, anonymity, appendix, code, or AI-use rules are unknown | Block final submission and update `submission_checklist.md` |
