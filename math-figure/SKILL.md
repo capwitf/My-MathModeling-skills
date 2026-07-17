@@ -9,7 +9,7 @@ description: Use when 高教社杯/CUMCM 数学建模论文需要规划、选择
 
 Select, generate, or review figures that prove a claim. Main-body figures must carry mechanism, comparison, robustness, or decision evidence; diagnostic and dense support figures default to appendix.
 
-Read the project's shared quality contract only when promoting a figure to paper-ready, classifying blocked status, running a final gate, or writing a cross-module handoff. Local chart choice or visual repair can stay lightweight.
+Read `math-hub/references/quality-contract.md` only when promoting a figure to paper-ready, classifying blocked status, running a final gate, or writing a cross-module handoff. Local chart choice or visual repair can stay lightweight.
 
 ## Figure First Principles
 

@@ -101,8 +101,10 @@ Before a figure is labeled `paper_ready`, inspect the saved image at paper zoom 
 Recommended fields:
 
 ```csv
-figure_id,problem_id,claim_id,paper_role,figure_path,figure_type,plot_family,plot_type,why_this_plot,scenario,metric,unit,source_table,source_script,run_id,baseline_or_threshold,uncertainty_or_error,constraint_status,caption,post_figure_conclusion,validation_status,risk_note,data_source,notes
+figure_id,problem_id,claim_id,paper_role,figure_path,figure_type,plot_family,plot_type,why_this_plot,scenario,metric,unit,source_table,source_script,run_id,baseline_or_threshold,uncertainty_or_error,constraint_status,caption,post_figure_conclusion,render_check_status,human_visual_check,visual_check_note,validation_status,risk_note,data_source,notes
 ```
+
+For `paper_ready`, require `figure_evidence.csv` to show either `render_check_status=passed` or `human_visual_check=passed`; a figure with no render_check or human_visual_check record remains checked, diagnostic-only, or blocked.
 
 `validation_status` values:
 

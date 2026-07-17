@@ -6,15 +6,17 @@
 
 ## 必做事项
 
-- 精读题面与附件元数据。
+- 精读题面与附件元数据；若题面、交付物、模糊词、分问递推或附件字段尚未锁定，先调用 `math-problem-reader` 做题面解读。
 - 识别核心矛盾、待决策变量、主要目标、隐藏边界约束。
 - 使用 [a-problem-decision-tree.md](a-problem-decision-tree.md) 做 A 题快速分诊，输出候选主线、辅线模块、第一版基准模型和验证闭环。
 - 对照 [a-problem-pattern-library.md](a-problem-pattern-library.md) 判断主模式和辅模式。若匹配清楚，选择主/辅模式；若不匹配，使用 `new_mechanism_route` 做机制审计，不强行套库。如需参考本地 2024 A 题素材，读取 [a-problem-2024-casebank.md](a-problem-2024-casebank.md)，只吸收结构模式，不照搬文字或结论。
-- 按 [artifacts-schema.md](artifacts-schema.md) 建立正式 artifacts 骨架。QC 默认先明确 `problem_brief.md`、`deliverable_matrix.csv`、`model_quality_review.md`、`symbol_table.csv`、`assumption_log.csv`、`result_registry.csv`、`claim_ledger.csv`、`ai_usage_log.md`、`submission_checklist.md` 的 owner 和阻塞状态；只有进入 dispatch 模式时才建立 `dag.md`，并按需要补 `model_handoff.md`、`figure_evidence.csv`、`run_record.csv`、`innovation_ledger.csv`、`review_findings.csv`、`final_submission_manifest.md`。
+- 若题型、领域机制、基准方案或候选方法不清楚，先由 hub QC 结合 `math-literature` 做前置来源核验和方法来源矩阵；不要等模型写完后再反向补文献。
+- 按 [artifacts-schema.md](artifacts-schema.md) 建立正式 artifacts 骨架。QC 默认先明确 `problem_brief.md`、`deliverable_matrix.csv`、`model_quality_review.md`、`symbol_table.csv`、`assumption_log.csv`、`result_registry.csv`、`claim_ledger.csv`、`ai_usage_log.md`、`submission_checklist.md` 的 owner 和阻塞状态；只有进入 dispatch 模式时才建立 `dag.md`，并按需要补 `research_brief.md`、`method_source_matrix.csv`、`idea_bank.csv`、`model_handoff.md`、`figure_evidence.csv`、`run_record.csv`、`innovation_ledger.csv`、`review_findings.csv`、`final_submission_manifest.md`。
 - 用 MECE 思维拆成 3-4 个严格前后依赖的子问题。
 - 建立全局符号表，统一时间、容量、成本、空间等基础维度。
 - 给建模手和代码手分别发第一轮指令。
 - 对每个核心问题预判可能采用的工具集群，如时间序列分析、网络流、统计学习、凸优化、混合整数规划、多目标优化、鲁棒优化。
+- 对来自文献或先例的候选工具，只能写成候选路线；正式选择必须说明任务匹配、数据匹配、验证负担和引用边界。
 - 在早期明确数据陷阱，如数据稀疏性、异常值噪声、时间戳错位、单位混用、样本泄漏、缺失字段和不可观测变量。
 
 ## 默认拆解顺序

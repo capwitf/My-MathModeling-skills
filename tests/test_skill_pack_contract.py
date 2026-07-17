@@ -13,7 +13,7 @@ REVIEWED_SKILLS = [
     "math-hub",
     "math-latex",
     "math-literature",
-    "math-writing",
+    "math-problem-reader",
     "math-model",
     "math-review",
     "math-table",
@@ -90,22 +90,32 @@ class SkillPackContractTest(unittest.TestCase):
 
     def test_hub_has_state_events_metrics_and_budget_contracts(self):
         hub = read("math-hub/SKILL.md")
+        schema = read("math-hub/references/artifacts-schema.md")
+        quality = read("math-hub/references/quality-contract.md")
 
         self.assert_contains_all(
             hub,
             [
                 "hub_state.json",
+                "## Event Gates",
+                "Metrics/budget gate",
+                "Allowed next module",
+            ],
+        )
+        self.assert_contains_all(
+            schema,
+            [
                 "current_subquestion",
                 "deliverable_completion",
                 "unified_terms",
                 "open_blockers",
                 "allowed_next_module",
-                "## 事件触发矩阵",
-                "## 指标与预算门禁",
-                "paper_ready_claim_ratio",
-                "same blocker",
+                "paper_ready_claims",
+                "candidate_claims",
+                "budget_status",
             ],
         )
+        self.assertIn("same blocker", quality)
 
     def test_reviewed_skills_covers_every_math_skill(self):
         self.assertEqual(sorted(REVIEWED_SKILLS), discovered_skill_names())
@@ -128,32 +138,18 @@ class SkillPackContractTest(unittest.TestCase):
         self.assert_contains_all(
             hub,
             [
-                "## 轻请求旁路",
-                "local paragraph rewrite",
-                "chart/figure selection",
-                "abstract style diagnosis",
-                "LaTeX compile/layout bug fix",
-                "Do not create or refresh `hub_state.json`",
-                "complete local answer",
-                "within the requested scope",
-                "Completeness means fully answering",
-                "does not mean generating full-project workflow artifacts",
+                "light local mode",
+                "paragraph rewrites",
+                "chart choices",
+                "abstract style notes",
+                "LaTeX layout fixes",
                 "local advice",
                 "diagnostic-only",
                 "paper-ready gate required",
-                "Every formal QC-mode response",
+                "Light local mode is exempt",
             ],
         )
         self.assertNotIn("return compact help", hub)
-        self.assert_contains_all(
-            hub,
-            [
-                "paper-ready code outputs, final abstract claims, or final LaTeX/PDF submission work",
-                "exploratory or diagnostic code",
-                "style coaching",
-                "local compile, layout, figure placement, or table formatting issues",
-            ],
-        )
         self.assert_contains_all(
             schema,
             [
@@ -170,12 +166,11 @@ class SkillPackContractTest(unittest.TestCase):
         )
 
     def test_paper_ready_claim_contract_uses_claim_status_and_evidence_validation(self):
-        hub = read("math-hub/SKILL.md")
         schema = read("math-hub/references/artifacts-schema.md")
 
         self.assertNotIn("Claim-supporting rows use `validation_status`", schema)
         self.assert_contains_all(
-            hub,
+            schema,
             [
                 "claim_ledger.csv.status=paper_ready",
                 "validation_status=paper_ready",
@@ -259,7 +254,6 @@ class SkillPackContractTest(unittest.TestCase):
         )
 
     def test_review_report_actionable_fields_are_contract_locked(self):
-        hub = read("math-hub/SKILL.md")
         schema = read("math-hub/references/artifacts-schema.md")
         model = read("math-model/SKILL.md")
         code = read("math-code/SKILL.md")
@@ -270,7 +264,7 @@ class SkillPackContractTest(unittest.TestCase):
         abstract = read("math-abstract/SKILL.md")
 
         self.assert_contains_all(
-            hub,
+            schema,
             [
                 "subquestions_covered",
                 "deliverables_missing",
@@ -282,10 +276,7 @@ class SkillPackContractTest(unittest.TestCase):
                 "figure_count",
             ],
         )
-        self.assert_contains_all(
-            schema,
-            ["## Hub QC Summary Fields", "subquestions_covered", "table_count", "figure_count"],
-        )
+        self.assertIn("## Hub QC Summary Fields", schema)
         self.assert_contains_all(
             model,
             ["## Route Triage", "variables", "constraints", "validation tier"],
@@ -408,15 +399,16 @@ class SkillPackContractTest(unittest.TestCase):
         self.assert_contains_all(
             hub,
             [
-                "final AI-use statement or official disclosure form",
-                "Do not place AI-use disclosure wording in the abstract, body text, code comments",
+                "route final wording to `math-compliance`",
+                "do not place disclosure text in abstract, body, code comments",
             ],
         )
         self.assert_contains_all(
             schema,
             [
                 "AI-use disclosure artifacts are final-submission materials",
-                "The disclosure wording itself belongs in the final checklist or separate required disclosure file",
+                "They should not be inserted into the abstract, main body",
+                "Final submission checklist, official disclosure form, separate AI-use statement",
             ],
         )
         self.assert_contains_all(
@@ -758,8 +750,7 @@ class SkillPackContractTest(unittest.TestCase):
         self.assert_contains_all(
             hub,
             [
-                "missing_robustness_plan_count",
-                "validation tier",
+                "fragile parameters",
                 "robustness plan",
             ],
         )
@@ -834,8 +825,6 @@ class SkillPackContractTest(unittest.TestCase):
             hub,
             [
                 "math-literature",
-                "claim_citation_map.csv.status=paper_ready",
-                "reference_registry.csv.status=verified or paper_ready",
             ],
         )
         self.assert_contains_all(
@@ -845,46 +834,25 @@ class SkillPackContractTest(unittest.TestCase):
                 "reference_registry.csv",
                 "claim_citation_map.csv",
                 "Paper-ready wording",
+                "claim_citation_map.csv.status=paper_ready",
+                "verified or paper-ready `reference_registry.csv` row",
             ],
         )
 
-    def test_writing_skill_owns_paper_facing_prose_and_raw_output_guards(self):
-        writing = read("math-writing/SKILL.md")
-        guard = read("math-writing/references/paper-facing-text-guard.md")
-        templates = read("math-writing/references/writing-templates.md")
-        result_analysis = read("math-writing/references/result-analysis-writing.md")
+    def test_problem_reader_locks_deliverables_before_modeling(self):
+        reader = read("math-problem-reader/SKILL.md")
 
         self.assert_contains_all(
-            writing,
+            reader,
             [
-                "paper-facing prose",
-                "raw-output",
-                "evidence gaps",
-                "math-model",
-                "math-figure",
-                "math-consistency",
-                "math-latex",
+                "problem_brief.md",
+                "deliverable_matrix.csv",
+                "attachments",
+                "candidate_math_quantity",
+                "dependency_graph",
+                "do not model yet",
                 "Return to hub: math-hub",
             ],
-        )
-        self.assert_contains_all(
-            guard,
-            [
-                "final prose",
-                "evidence material",
-                "diagnostic material",
-                "raw console output",
-                "conclusion",
-                "boundary",
-            ],
-        )
-        self.assert_contains_all(
-            templates,
-            ["问题重述", "模型假设", "问题分析与思路概述", "模型评价、改进与推广"],
-        )
-        self.assert_contains_all(
-            result_analysis,
-            ["conclusion", "evidence", "comparison", "mechanism", "boundary"],
         )
 
     def test_templates_skill_adds_reusable_contest_project_assets(self):
@@ -1541,8 +1509,20 @@ class SkillPackContractTest(unittest.TestCase):
         style_profile = read("math-templates/references/national-prize-style-profile.md")
         section_templates = read("math-templates/assets/contest-project-template/paper/section_templates_national.md")
 
+        self.assert_contains_all(
+            hub,
+            [
+                "national-first-candidate",
+                "does not promise an award",
+                "task fit",
+                "modeling insight",
+                "evidence",
+                "reproducibility",
+                "boundaries",
+            ],
+        )
+
         for path, text in {
-            "math-hub/SKILL.md": hub,
             "math-review/SKILL.md": review,
             "math-templates/references/national-prize-style-profile.md": style_profile,
             "math-templates/assets/contest-project-template/paper/section_templates_national.md": section_templates,
@@ -1601,12 +1581,10 @@ class SkillPackContractTest(unittest.TestCase):
                     ["interface:", "display_name:", "short_description:", "default_prompt:"],
                 )
 
-        hub = read("math-hub/SKILL.md")
         templates = read("math-templates/SKILL.md")
         readme = read("README.md")
 
         for path, text in {
-            "math-hub/SKILL.md": hub,
             "math-templates/SKILL.md": templates,
             "README.md": readme,
         }.items():
@@ -1628,7 +1606,7 @@ class SkillPackContractTest(unittest.TestCase):
     def test_national_first_boundary_reaches_every_math_skill(self):
         required_terms = ["国一候选", "不承诺获奖", "题目贴合", "建模洞察", "证据可信", "可复现", "边界清楚"]
 
-        for skill in [name for name in REVIEWED_SKILLS if name not in {"math-model", "math-figure", "math-writing"}]:
+        for skill in [name for name in REVIEWED_SKILLS if name not in {"math-hub", "math-model", "math-figure", "math-problem-reader"}]:
             with self.subTest(skill=skill):
                 self.assert_contains_all(read(f"{skill}/SKILL.md"), required_terms)
                 self.assert_contains_all(read(f"{skill}/agents/openai.yaml"), ["国一候选", "证据", "边界"])

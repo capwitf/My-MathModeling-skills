@@ -1,4 +1,4 @@
 interface:
   display_name: "Math Contest Hub"
   short_description: "按国一候选标准锁定范围、证据和边界"
-  default_prompt: "使用 $math-hub 作为国一候选质量枢纽：锁定当前问题、交付物、模型质量、证据链、验证、一致性、合规/AI 披露风险、可能扣分点和边界；不默认拆工作流，只放行证据可信、可复现、边界清楚的下一步。中文服务于产出质量，必要英文术语、字段、算法名和官方原文可保留，不因中文化牺牲判断力。"
+  default_prompt: "使用 $math-hub 锁定问题、交付物、证据、验证、一致性、合规和下一模块；不默认 dispatch，paper-ready 不足时阻塞或降级。"

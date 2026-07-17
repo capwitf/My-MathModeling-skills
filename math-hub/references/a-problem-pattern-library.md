@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Use this library during A-problem triage after reading the actual题面. It gives repeatable patterns, not final answers. Always derive deliverables, rules, data fields, and constraints from the current contest problem.
+Use this library during A-problem triage after reading the actual problem statement. It gives repeatable patterns, not final answers. Always derive deliverables, rules, data fields, and constraints from the current contest problem.
 
 For 2024 bench-dragon examples and 2023 heliostat examples, read [a-problem-2024-casebank.md](a-problem-2024-casebank.md) as supporting evidence, not as a template to copy.
 
@@ -12,7 +12,7 @@ If the current A problem does not clearly match one of the patterns below, do no
 
 When using `new_mechanism_route`:
 
-- 不得硬选主模式 just to make the workflow continue.
+- 不得硬选主模式；不要为了让流程继续而强行归类。
 - 从交付物反推: list the exact required tables, figures, decisions, parameters, or prose answers before naming a model.
 - Identify the real-world mechanism in one sentence: conservation, geometry, motion, material response, signal extraction, economics, queueing, control, policy, or another problem-specific mechanism.
 - Build a baseline from the simplest defensible accounting, physical relation, simulation, or direct calculation.
@@ -99,7 +99,7 @@ When using `new_mechanism_route`:
 
 ## Quick Pattern Selection
 
-Use this output after reading the题面:
+Use this output after reading the problem statement:
 
 ```text
 match_confidence:

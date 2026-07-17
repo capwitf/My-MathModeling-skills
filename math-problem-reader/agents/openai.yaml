@@ -1,0 +1,4 @@
+interface:
+  display_name: "Problem Reader"
+  short_description: "题面解读、交付物锁定和附件前置探索"
+  default_prompt: "使用 $math-problem-reader 先读题、附件和分问，锁定交付物、模糊词、数据前置探索和依赖关系；不要提前建模，阻塞项返回 math-hub。"

@@ -8,7 +8,7 @@ This casebank summarizes reusable patterns from locally archived 2024 A-problem 
 - `A163`
 - `A242`
 
-The provided 2024 materials are page images. OCR was used for extraction, so this file records structural patterns only. Do not copy wording, do not rely on exact OCR page numbers, and do not treat any numeric value here as final evidence for another paper.
+**OCR risk warning**: The provided 2024 materials are page images. OCR was used for extraction, so this file records structural patterns only. Do not copy wording. Do not trust exact numeric values, exact OCR page numbers, or any numeric value here as final evidence for another paper.
 
 A locally archived 2023 A-problem heliostat paper identified as `A092.pdf` is used only as near-year pattern context in the final section, not as part of the 2024 casebank.
 

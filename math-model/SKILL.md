@@ -9,19 +9,19 @@ description: Use when 高教社杯/CUMCM 数学建模任务需要变量、假设
 
 Turn the locked problem brief into a problem-driven model route: variables, constraints, assumptions, units, objective/mechanism, validation, robustness plan, result schema, and code handoff.
 
-Read the project's shared quality contract only when promoting a route to paper-ready, classifying blocked status, preparing a final gate, or writing a cross-module handoff. For exploratory model sketches, keep the boundary local and do not load the shared contract by default.
+Read `math-hub/references/quality-contract.md` only when promoting a route to paper-ready, classifying blocked status, preparing a final gate, or writing a cross-module handoff. For exploratory model sketches, keep the boundary local and do not load the shared contract by default.
 
 Do not choose an algorithm because it sounds advanced. First state what mathematical problem the subquestion is, then choose the simplest route that can answer the required deliverable.
 
 ## Required Inputs
 
-- `problem_brief.md` and `deliverable_matrix.csv`, or an equivalent current problem lock from the intake/hub lane;
+- `problem_brief.md` and `deliverable_matrix.csv`, or an equivalent current lock from `math-problem-reader`/`math-hub`;
 - active subquestion, input data, assumptions, limits, and expected output;
 - known units, source files, and official constraints;
 - `research_brief.md` or `method_source_matrix.csv` when the route was literature-informed or when multiple source-backed candidate routes were scouted;
 - prior model version if this is a revision.
 
-If these are missing, return to the problem-intake or hub lane instead of inventing the task.
+If these are missing, return to `math-problem-reader` or `math-hub` instead of inventing the task.
 
 ## Modeling Flow
 

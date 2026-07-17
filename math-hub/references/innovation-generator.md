@@ -2,7 +2,27 @@
 
 ## Purpose
 
-Use this reference to generate contest-safe innovation candidates for A-problem papers. Innovation must be a useful modeling decision with evidence, not a decorative model name. The output is `innovation_ledger.csv`, and only verified rows may enter the abstract or highlight sections.
+Use this reference to generate contest-safe innovation candidates for A-problem papers. Innovation must be a useful modeling decision with evidence, not a decorative model name. The output is `innovation_ledger.csv`, and only verified rows may enter the abstract or highlight sections. Use [forward-test-protocol.md](forward-test-protocol.md) when a new innovation pattern needs real-problem pressure testing.
+
+## Innovation Discovery
+
+Start from the problem wording, not from algorithm names. The path is:
+
+```text
+from problem wording to innovation candidate:
+机制异常/痛点 -> baseline limitation -> changed modeling decision -> evidence needed
+```
+
+Look for:
+
+- mechanism surprise: the task is really a state recursion, collision check, queue, conservation relation, or feasibility proof rather than the surface algorithm category.
+- constraint made explicit: a hidden capacity, exclusivity, geometry, time-window, unit, or boundary condition that most baseline models would leave implicit.
+- coupling opportunity: prediction-to-decision, simulation-to-optimization, mechanism-to-data, local-to-global, or earlier-subquestion-to-later-constraint linkage.
+- baseline limitation: the simplest defensible model fails a required scenario, boundary case, ranking stability, or feasibility check.
+
+Rule: do not start from algorithm names. A proposed innovation is only a candidate until it names the exact problem pain, the changed variable/constraint/metric/coupling, and the table or figure that would prove it helps.
+
+Forward-test gate: a row without `forward_test_id` may be `candidate`, `tested`, `rejected`, or `blocked`, but it cannot be `verified`, and `abstract_allowed` cannot be `yes`. The forward test must show the real problem pain, fair baseline failure, changed component, pass/fail rule, and paper-ready evidence boundary before the innovation wording can move into the abstract or highlights.
 
 ## Innovation Candidate Sources
 
@@ -10,7 +30,7 @@ Look for innovations in these places:
 
 - **Problem interpretation**: a sharper state/event, geometry, physical, or business mechanism that reduces ambiguity.
 - **Constraint modeling**: a hidden feasibility, collision, shadowing, capacity, conservation, or boundary constraint made explicit.
-- **Metric design**: a target-specific metric that connects the题面 to the objective or evaluation.
+- **Metric design**: a target-specific metric that connects the problem statement to the objective or evaluation.
 - **Search strategy**: a problem-shaped coarse-to-fine, dynamic, branch-pruned, or decomposition search that improves reliability.
 - **Model coupling**: prediction-to-decision, simulation-to-optimization, mechanism-to-data, or local-to-global coupling.
 - **Dimensional reduction**: justified grouping, symmetry, layer/ring aggregation, representative scenarios, or state compression.
@@ -27,7 +47,7 @@ Before calling anything an innovation, fill this table:
 | What is new relative to the first baseline? | State the changed variable, constraint, metric, decomposition, or solver loop. |
 | What evidence proves it helps? | Baseline/ablation/comparison table, constraint check, runtime, error, or feasibility result. |
 | What is the cost? | Added assumptions, computation, data dependence, or interpretability burden. |
-| Is it necessary? | Explain why the baseline alone is insufficient for the题面. |
+| Is it necessary? | Explain why the baseline alone is insufficient for the problem statement. |
 | Is it reproducible? | Point to formula, script, run record, and result id. |
 | Is it explainable in two sentences? | If not, simplify the claim. |
 
@@ -76,7 +96,7 @@ Do not claim improvement without the denominator. "Improves by 5%" is invalid un
 Do not call these innovation:
 
 - replacing a simple model name with a fashionable algorithm name;
-- adding PSO/GA/SA/AHP/TOPSIS without showing why the题面 needs it;
+- adding PSO/GA/SA/AHP/TOPSIS without showing why the problem statement needs it;
 - using more figures or more code without a new model decision;
 - tuning hyperparameters until a number looks better without a run record;
 - adding unsupported "adaptive", "dynamic", "multi-objective", or "hybrid" wording;
@@ -90,16 +110,17 @@ Do not call these innovation:
 Required fields:
 
 ```csv
-innovation_id,problem_id,candidate_name,source_type,baseline_id,changed_component,mechanism_summary,expected_benefit,evidence_required,ablation_plan,evidence_result_id,figure_or_table,run_id,status,risk_note,abstract_allowed
+innovation_id,problem_id,forward_test_id,candidate_name,source_type,baseline_id,changed_component,mechanism_summary,expected_benefit,evidence_required,ablation_plan,evidence_result_id,figure_or_table,run_id,status,risk_note,abstract_allowed
 ```
 
 Field rules:
 
 - `source_type`: `interpretation`, `constraint`, `metric`, `search`, `coupling`, `dimension_reduction`, `validation`, or `artifact`.
 - `baseline_id`: must point to a result, model, or run record.
+- `forward_test_id`: must point to a passed row in `forward_test_matrix.csv` before status can be `verified`.
 - `evidence_required`: must name the exact table/figure/diagnostic needed.
 - `status`: `candidate`, `tested`, `verified`, `rejected`, or `blocked`.
-- `abstract_allowed`: `yes` only when the `innovation_ledger.csv` row is verified, the claim has a baseline or ablation, and its evidence row is `validation_status=paper_ready` in `result_registry.csv` or `figure_evidence.csv`.
+- `abstract_allowed`: `yes` only when the `innovation_ledger.csv` row is verified, the linked forward test passed, the claim has a baseline or ablation, and its evidence row is `validation_status=paper_ready` in `result_registry.csv` or `figure_evidence.csv`.
 
 ## Output Template
 

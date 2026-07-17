@@ -1,4 +1,0 @@
-interface:
-  display_name: "Math Modeling Writing"
-  short_description: "数模论文正文写作、段落修复和 raw output 护栏"
-  default_prompt: "使用 $math-writing 改写数模论文正文、结果分析、假设和模型评价；把 raw output 转成证据支撑的论文语言。"

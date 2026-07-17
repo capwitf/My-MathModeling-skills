@@ -24,24 +24,31 @@ Keep file-level `artifact_status` separate from row-level claim and evidence fie
 
 | Artifact | Mode | Owner | Consumers | Required fields | Blocks when |
 | --- | --- | --- | --- | --- | --- |
-| `hub_state.json` | core QC | hub | all roles | `contest`, `problem_id`, `current_subquestion`, `phase`, `deliverable_completion`, `subquestions_covered`, `deliverables_missing`, `unified_terms`, `units_consistency`, `notation_consistency`, `paper_ready_claims`, `candidate_claims`, `open_blockers`, `allowed_next_module`, `verification_status`, `consistency_status`, `compliance_status`, `similarity_risk`, `score_risk`, `validation_metrics`, `budget_status`, `last_hub_event` | current lock, blockers, allowed next module, claim lists, or budget/validation status is stale or unknown after a trigger event |
-| `problem_brief.md` | core QC | hub | all roles | contest/problem id, current lock, task boundary, official-rule source, data files, forbidden assumptions, anonymity notes | active problem, subquestion, or rules that affect submission are unknown |
+| `hub_state.json` | core QC | hub | all roles | `contest`, `problem_id`, `current_subquestion`, `phase`, `model_iteration`, `model_version`, `deliverable_completion`, `subquestions_covered`, `deliverables_missing`, `unified_terms`, `units_consistency`, `notation_consistency`, `paper_ready_claims`, `candidate_claims`, `open_blockers`, `allowed_next_module`, `verification_status`, `consistency_status`, `compliance_status`, `similarity_risk`, `score_risk`, `validation_metrics`, `budget_status`, `last_hub_event` | current lock, blockers, allowed next module, model version, claim lists, or budget/validation status is stale or unknown after a trigger event |
+| `problem_brief.md` | core QC | hub or math-problem-reader | all roles | contest/problem id, current lock, task boundary, problem_interpretation, ambiguity_map, dependency_graph, official-rule source, data files, forbidden assumptions, anonymity notes | active problem, subquestion, deliverables, dependency edges, or rules that affect submission are unknown |
 | `deliverable_matrix.csv` | core QC | hub | all roles | `deliverable_id`, `problem_id`, `subquestion`, `required_output`, `format`, `evidence_needed`, `owner`, `status`, `risk_note` | a subquestion has no explicit required output or accepted omission |
-| `model_quality_review.md` | core QC | hub | modeling, code, writer, review | current route, quality class, task fit, baseline, variables, objective, constraints, units, result schema, validation plan, minimum repair | code or writing would proceed from a route that is not `national-first-candidate` |
+| `model_quality_review.md` | core QC | hub | modeling, code, writer, review | current route, quality class, task fit, baseline, method choice rationale, variables, objective, constraints, units, result schema, validation plan, minimum repair | code or writing would proceed from a route that is not `national-first-candidate` |
 | `symbol_table.csv` | core QC | modeling | code, writer, LaTeX, review | `symbol`, `type`, `meaning`, `unit`, `domain`, `first_use`, `source`, `status` | any formula/table uses an undefined symbol, conflicting unit, or unknown unit marked as harmless |
 | `assumption_log.csv` | core QC | modeling | code, writer, review | `assumption_id`, `statement`, `affected_variables`, `affected_constraints`, `rationale`, `validation_plan`, `risk_if_false`, `status` | assumption changes the objective/constraints but has no validation plan |
-| `result_registry.csv` | core QC | code | writer, abstract, review, LaTeX | `result_id`, `problem_id`, `scenario_id`, `metric`, `value`, `unit`, `source_table`, `source_script`, `run_id`, `validation_status` | a paper claim has no row or row `validation_status` is not `paper_ready` |
+| `research_brief.md` | evidence/support when method ideas need external grounding | hub QC | hub, modeling, literature, review | current lock, search purpose, query axes, viable route shortlist, rejected routes, source support boundaries, modeling gaps, recommended next owner | a route depends on literature or domain precedent but the source boundary, adaptation need, or rejected alternatives are unknown |
+| `method_source_matrix.csv` | evidence/support when candidate methods are scouted | hub QC | modeling, literature, review | `candidate_id`, `problem_id`, `subquestion`, `source_ref`, `source_type`, `source_status`, `problem_class`, `method_family`, `transferable_idea`, `required_data`, `variables_or_states`, `objective_or_metric`, `constraints_or_assumptions`, `baseline_or_comparison`, `validation_idea`, `task_fit`, `data_fit`, `implementation_cost`, `validation_burden`, `contest_value`, `data_availability`, `implementation_time`, `validation_risk`, `novelty_value`, `route_score`, `recommended_role`, `citation_boundary`, `next_owner`, `status` | a source-inspired method is selected without task/data fit, data availability, validation burden, recommended role, or citation boundary |
+| `idea_bank.csv` | lightweight evidence/support | hub QC | modeling, figure, review | `idea_id`, `problem_id`, `subquestion`, `idea_type`, `idea_text`, `source_ref`, `usable_for`, `required_adaptation`, `evidence_needed`, `risk_note`, `status` | an idea enters modeling or writing without adaptation needs or evidence boundary |
+| `result_registry.csv` | core QC | code | writer, abstract, review, LaTeX | `result_id`, `problem_id`, `scenario_id`, `metric`, `value`, `unit`, `source_table`, `source_script`, `run_id`, `validation_status`, `frozen_at`, `superseded_by` | a paper claim has no row or row `validation_status` is not `paper_ready`, or a frozen row was edited in place |
 | `claim_ledger.csv` | core QC | writer or abstract | hub, review, LaTeX | `claim_id`, `location`, `claim_text`, `metric`, `value`, `unit`, `evidence_id`, `figure_or_table`, `status` | abstract/conclusion claim lacks evidence or mixes metric types |
 | `ai_usage_log.md` | core QC when AI is used or rules require it | hub | writer, review, final checker | tool name/version, date/time, task phase, prompt or interaction summary, generated material, adopted material, human verification/modification, final checklist/disclosure-file location | AI-assisted content exists without traceable disclosure and human verification notes |
 | `ai_claim_disclosure.csv` | core QC when AI is used or rules require claim-level disclosure | math-compliance | hub, review, final checker | `adopted_material_id`, `claim_id`, `artifact`, `location`, `ai_tool`, `model_or_version`, `date`, `task_phase`, `interaction_summary`, `human_verification`, `modification_summary`, `disclosure_location`, `status` | adopted AI-assisted material lacks claim-level traceability, human verification, or disclosure location |
 | `submission_checklist.md` | core QC | hub or final checker | all roles | official-rule source checked, page/format rules, anonymity checks, appendix/code/support requirements, AI-use requirements, open blockers | official rules are unknown, required files are missing, or submission-blocking checks are unresolved |
-| `model_handoff.md` | evidence/support | modeling | code, writer, review | subproblem, model route, equations, inputs, outputs, result table schema, figure list, diagnostics, unresolved gaps | code must infer formulas, units, thresholds, or output schemas |
+| `model_handoff.md` | evidence/support | modeling | code, writer, review | subproblem, model_version, model route, equations, inputs, outputs, PoC ids, result table schema, figure list, diagnostics, revision_history, unresolved gaps | code must infer formulas, units, thresholds, model version, output schemas, or candidate feasibility |
+| `poc_registry.csv` | evidence/support | modeling or code | hub, modeling, code, review | `poc_id`, `problem_id`, `subquestion`, `candidate_id`, `model_version`, `script_or_command`, `source_data`, `source_slice`, `metric`, `value`, `unit`, `runtime`, `status`, `failure_reason`, `promoted_model_version` | `paper_ready` promotion starts without a passed real-data PoC, the PoC used synthetic or untraceable data, or the candidate failed feasibility |
 | `math_verification.csv` | evidence/support | math-verifier | hub, modeling, code, writer, review | `check_id`, `subquestion`, `artifact`, `location`, `claim_id`, `check_type`, `input_ref`, `expected_relation`, `observed`, `status`, `severity`, `minimum_fix`, `owner` | a formula, unit, constraint, boundary case, or feasibility claim is unchecked, failed, or blocked |
-| `run_record.csv` | evidence/support | code | modeling, writer, review, final checker | `run_id`, `problem_id`, `command`, `entry_script`, `input_files`, `parameters`, `seed`, `solver_status`, `warnings`, `output_tables`, `output_figures`, `log_path`, `run_status` | a result or figure references a missing `run_id`, or the run cannot reproduce the cited outputs |
+| `run_record.csv` | evidence/support | code | modeling, writer, review, final checker | `run_id`, `problem_id`, `model_version`, `command`, `entry_script`, `input_files`, `parameters`, `seed`, `solver_status`, `warnings`, `output_tables`, `output_figures`, `log_path`, `run_status`, `superseded_by` | a result or figure references a missing `run_id`, or the run cannot reproduce the cited outputs |
+| `freeze_change_log.md` | evidence/support | code or consistency | hub, writer, review, final checker | changed result id, thaw reason, old value, new result id, rerun/source, affected claims, consistency audit row | a paper-ready result changes without a thaw record, new result row, and consistency check |
 | `numerical_diagnostics.csv` | evidence/support | math-code | hub, modeling, review, final checker | `diagnostic_id`, `run_id`, `subquestion`, `artifact`, `check_type`, `metric`, `value`, `threshold`, `status`, `severity`, `minimum_fix` | tolerance-sensitive, stochastic, or solver-based results have open P0/P1 diagnostics or no diagnostic row |
-| `figure_evidence.csv` | evidence/support | math-code or math-figure | writer, abstract, math-figure, math-review, LaTeX | fields defined in [figure-evidence-rules.md](figure-evidence-rules.md), including `figure_id`, `claim_id`, `figure_path`, `run_id`, `caption`, `post_figure_conclusion`, `validation_status` | a paper figure, figure-backed claim, or abstract figure claim has no row or row `validation_status` is not `paper_ready` |
+| `figure_evidence.csv` | evidence/support | math-code or math-figure | writer, abstract, math-figure, math-review, LaTeX | fields defined in [figure-evidence-rules.md](figure-evidence-rules.md), including `figure_id`, `claim_id`, `figure_path`, `run_id`, `caption`, `post_figure_conclusion`, `render_check_status`, `human_visual_check`, `visual_check_note`, `validation_status` | a paper figure, figure-backed claim, or abstract figure claim has no row, no render/human visual check, or row `validation_status` is not `paper_ready` |
 | `consistency_audit.csv` | evidence/support | math-consistency | hub, abstract, writer, review, final checker | `audit_id`, `claim_id`, `artifact_a`, `location_a`, `artifact_b`, `location_b`, `mismatch_type`, `expected`, `observed`, `severity`, `minimum_fix`, `owner`, `status` | abstract/body/table/figure/appendix/registry values, units, scenarios, baselines, or validation statuses disagree |
-| `innovation_ledger.csv` | evidence/support | modeling | abstract, writer, review | fields defined in [innovation-generator.md](innovation-generator.md) | claimed innovation has no baseline, ablation, or evidence chain |
+| `review_pass_items.csv` | evidence/support | math-review, math-verifier, math-consistency | hub, review, final checker | `pass_item_id`, `source_module`, `claim_id`, `file`, `location`, `value`, `constraint_direction`, `expected`, `observed`, `evidence_ref`, `status`, `notes` | a final-gate review has fewer than five concrete pass items, or a pass item lacks file, location, value, constraint direction, or observed evidence |
+| `forward_test_matrix.csv` | evidence/support | modeling or review | hub, abstract, writer, review | `forward_test_id`, `contest_problem`, `subquestion`, `problem_pain`, `baseline_model`, `baseline_failure`, `innovation_candidate`, `changed_component`, `required_evidence`, `expected_artifacts`, `pass_fail_rule`, `result_evidence_id`, `run_id`, `review_status`, `abstract_allowed`, `risk_note` | claimed innovation pattern has no real-problem pressure test, no baseline failure, no pass/fail rule, or no paper-ready evidence boundary |
+| `innovation_ledger.csv` | evidence/support | modeling | abstract, writer, review | fields defined in [innovation-generator.md](innovation-generator.md), including `forward_test_id` | claimed innovation has no baseline, ablation, forward test, or evidence chain |
 | `literature_search_log.csv` | evidence/support when needed | math-literature | writer, review, hub | `search_id`, `source`, `query`, `date_checked`, `result_count`, `accepted_reference_ids`, `notes` | important final related-work, source, or citation decisions rely on unlogged search work |
 | `reference_registry.csv` | evidence/support | math-literature | writer, review, abstract, final checker | `reference_id`, `title`, `authors`, `year`, `venue`, `doi`, `url`, `source_tier`, `verified_from`, `supports`, `limits`, `status` | a paper citation has missing metadata, unverified source status, or unclear support boundary |
 | `claim_citation_map.csv` | evidence/support when needed | math-literature | writer, review, consistency | `map_id`, `claim_id`, `location`, `reference_id`, `support_type`, `exact_supported_point`, `boundary`, `status` | an important citation-backed method, parameter, standard, policy, dataset, baseline, or comparison claim has no verified source mapping |
@@ -69,12 +76,19 @@ These fields are summary gates, not replacements for row-level artifacts. If the
 Required sections:
 
 - Current contest and problem scope.
+- `problem_interpretation`: concise 题面解读 with signal vs noise, exact deliverables, and scoring focus.
+- `ambiguity_map`: fuzzy words mapped to candidate mathematical quantities and evidence source.
+- `dependency_graph`: upstream output, dependency_type, downstream_use for every cross-subquestion dependency.
 - Current lock: active problem/subquestion and what this pass is allowed to judge.
 - Exact subproblem deliverables, including complete tables, schedules, rankings, routes, figures, or attachments.
 - Data inventory with source path, file type, row/page count when known, and whether original files may be modified.
 - Rule inventory: official notice/user-provided rules that affect page count, archive format, AI-use disclosure, anonymity, and file naming.
 - Non-negotiable constraints from the user.
 - Open blockers.
+
+## `hub_state_lite`
+
+Use lite state when the project is active but maintaining full `hub_state.json` would slow a local repair. `hub_state_lite` keeps only `current_subquestion`, `open_blockers`, `allowed_next_module`, `paper_ready_claims`, and `compliance_status`. Use lite state for short exchanges, then expand to full `hub_state.json` before paper-ready promotion, final package work, or model invalidation handling.
 
 Consumer rule: no role should start final claim writing until `problem_brief.md` lists every subproblem deliverable.
 
@@ -96,7 +110,7 @@ deliverable_id,problem_id,subquestion,required_output,format,evidence_needed,own
 - `accepted_omission`
 - `blocked`
 
-A subquestion is not ready for writing until every required row is `provided` or explicitly `accepted_omission` with a risk note.
+`accepted_omission` is not a convenience status. It is allowed only when the output is officially optional, impossible from provided data, covered by another deliverable, or explicitly waived by the user/official rule. The row must include `approval_source`, `omission_reason`, `accepted_by`, and a risk note. A subquestion is not ready for writing until every required row is `provided` or explicitly `accepted_omission` with a defensible reason.
 
 ## `model_quality_review.md`
 
@@ -111,11 +125,45 @@ Required sections:
 - Baseline/reference scheme and why it is adequate for comparison.
 - Variables, domains, units, objective, constraints, and boundary conditions.
 - Algorithm/solver/simulation route and why it follows from the model.
+- Method choice rationale: evidence id, baseline defect, boundary, and why the route survives comparison.
 - Result schema: tables, figures, registry rows, and paper-facing conclusions expected.
 - Validation plan: feasibility, boundary/extreme cases, sensitivity/robustness, baseline/ablation, and reproducibility evidence.
 - Main risks, missing evidence, and minimum repair before paper-ready code/writing.
 
+Do not copy AI method advice or accept "works better" as rationale. A method choice rationale must cite evidence id, baseline defect, and boundary before it can support final prose.
+
 Downstream rule: paper-ready code outputs, final abstract claims, and final LaTeX/PDF submission work should not proceed from a modeling route whose quality class is not `national-first-candidate`. Exploratory/diagnostic code, abstract style coaching, and local LaTeX compile/layout fixes may proceed when clearly labeled as local advice or `diagnostic-only`; they must not promote claims into final paper language.
+
+## Research Artifacts
+
+Use `research_brief.md`, `method_source_matrix.csv`, and `idea_bank.csv` when literature or domain precedent is used to generate solution routes before formal modeling. These artifacts are for forward idea scouting, not for reverse-citing an already chosen conclusion.
+
+`research_brief.md` required sections:
+
+- current lock and required deliverable;
+- search purpose and query axes;
+- viable route shortlist;
+- rejected routes with reasons;
+- source support boundaries;
+- modeling gaps that must not be guessed;
+- citation candidates needing `math-literature`;
+- recommended next owner.
+
+`method_source_matrix.csv` required fields:
+
+```csv
+candidate_id,problem_id,subquestion,source_ref,source_type,source_status,problem_class,method_family,transferable_idea,required_data,variables_or_states,objective_or_metric,constraints_or_assumptions,baseline_or_comparison,validation_idea,task_fit,data_fit,implementation_cost,validation_burden,contest_value,data_availability,implementation_time,validation_risk,novelty_value,route_score,recommended_role,citation_boundary,next_owner,status,notes
+```
+
+Recommended roles: `main_route`, `baseline`, `validation_only`, `appendix_idea`, or `reject`. If the model route was fixed before the source was found, use `status=citation_only` unless the route is explicitly reopened.
+
+`idea_bank.csv` required fields:
+
+```csv
+idea_id,problem_id,subquestion,idea_type,idea_text,source_ref,usable_for,required_adaptation,evidence_needed,risk_note,status,notes
+```
+
+Hub QC may mark routes as `candidate`, `shortlisted`, `verified-needed`, `citation_only`, `rejected`, or `blocked`. Only `math-model` may select the formal route, and only `math-literature` may make a source paper-ready for citation.
 
 ## `dag.md`
 
@@ -146,8 +194,11 @@ reverse_handoff_trigger: code finds a first collision before the claimed safe in
 
 For each subproblem, include:
 
+- `model_version` and `revision_history`;
+- `invalidation_reason` when this version replaces a prior model;
 - task target and required output table;
 - model route and why it matches the problem statement;
+- PoC evidence: `poc_registry.csv` ids for every main or baseline candidate that may become paper-ready;
 - variables, units, domains, and symbol table references;
 - objective and constraints in LaTeX;
 - assumptions and assumption ids;
@@ -158,6 +209,31 @@ For each subproblem, include:
 - diagnostics required from code;
 - values that must remain `NA`, empty, or `not identifiable`;
 - unresolved gaps and owner.
+
+Do not delete stale rows when a model changes. Mark old evidence rows as `deprecated`, record `deprecated_by` or `superseded_by`, and leave enough revision history to explain why the prior model is no longer paper-ready.
+
+## `poc_registry.csv`
+
+Use one row per candidate feasibility probe before `paper_ready` promotion. The PoC should be `<=30-line` when expressed as a compact script or command wrapper, must run on a `real data` slice or real attachment-derived sample, and must record a concrete output number, runtime, infeasibility verdict, or failure reason.
+
+Required fields:
+
+```csv
+poc_id,problem_id,subquestion,candidate_id,model_version,script_or_command,source_data,source_slice,metric,value,unit,runtime,status,failure_reason,promoted_model_version,notes
+```
+
+`status` values:
+
+- `passed`
+- `failed`
+- `blocked`
+- `diagnostic-only`
+
+`paper_ready` promotion is `blocked` when the selected candidate lacks a `poc_registry.csv` row with `status=passed` on traceable real data. Synthetic, mocked, or untraceable inputs can be useful, but they remain `diagnostic-only` and cannot create `paper_ready` claims.
+
+In `poc_registry.csv`, `failure_reason` explains failed, rejected, deprecated, or diagnostic-only candidates, and `promoted_model_version` names the surviving route. A rejected candidate left as a main conclusion is blocked.
+
+Keep `poc_registry.csv.status` to `passed/failed/blocked/diagnostic-only`. Do not write `deprecated` or `rejected` into that status field; put method deprecation in `model_handoff.md` or `model_quality_review.md`, and leave any remaining reference diagnostic-only with `failure_reason`.
 
 Result table schema must include at least:
 
@@ -183,6 +259,27 @@ Common `check_type` values: `dimensional`, `domain`, `constraint`, `formula back
 
 Paper-ready formulas and feasibility claims are blocked while relevant rows are `blocked`, `fail`, or missing.
 
+## `forward_test_matrix.csv`
+
+Use one row per real-problem innovation pressure test. This file is governed by [forward-test-protocol.md](forward-test-protocol.md), and it prevents generated innovation ideas from entering final prose before a baseline failure and evidence boundary are visible.
+
+Required fields:
+
+```csv
+forward_test_id,contest_problem,subquestion,problem_pain,baseline_model,baseline_failure,innovation_candidate,changed_component,required_evidence,expected_artifacts,pass_fail_rule,result_evidence_id,run_id,review_status,abstract_allowed,risk_note
+```
+
+`review_status` values:
+
+- `planned`
+- `running`
+- `passed`
+- `failed`
+- `blocked`
+- `rejected`
+
+An innovation claim is blocked when `baseline_failure` is empty, `changed_component` is only a method name, `pass_fail_rule` lacks metric/unit/scenario, or `abstract_allowed=yes` without paper-ready evidence.
+
 ## `result_registry.csv`
 
 Use one row per paper-usable result. Do not use a single row for a vague sentence such as "model performs well".
@@ -190,7 +287,7 @@ Use one row per paper-usable result. Do not use a single row for a vague sentenc
 Required fields:
 
 ```csv
-result_id,problem_id,scenario_id,metric,value,unit,comparison_or_baseline,source_table,source_figure,source_script,run_id,validation_status,notes
+result_id,problem_id,scenario_id,metric,value,unit,comparison_or_baseline,source_table,source_figure,source_script,run_id,validation_status,frozen_at,superseded_by,notes
 ```
 
 `validation_status` values:
@@ -203,6 +300,14 @@ result_id,problem_id,scenario_id,metric,value,unit,comparison_or_baseline,source
 
 Only `paper_ready` rows may support abstract claims.
 
+When a `paper_ready` result is cited by `claim_ledger.csv`, it is frozen. Do not edit its value, unit, source, or run id in place. To change it, append `freeze_change_log.md`, set `superseded_by` on the old row, create a `new result_id`, and keep affected claims blocked until `consistency_audit.csv` clears the changed value.
+
+Keep result verdict and stability verdict separate: `result_registry.csv.validation_status` records value readiness, while `numerical_diagnostics.csv` records stability evidence. If open P0/P1 diagnostics exist, the result cannot be promoted even when the value looks strong.
+
+## `freeze_change_log.md`
+
+Append one entry whenever a frozen paper-ready result must change. Minimum fields: `changed_at`, `old_result_id`, `thaw_reason`, `old_value`, `new_result_id`, `rerun_or_source`, `affected_claims`, `consistency_audit_id`, and `owner`. If `thaw_reason`, `new_result_id`, or `affected_claims` is missing, the changed claim stays blocked.
+
 ## `run_record.csv`
 
 Use one row per reproducible formal run that creates paper-usable tables, figures, diagnostics, or final decisions. A `run_id` is stable only when the command, scripts, inputs, parameters, seed, and outputs are recorded.
@@ -210,7 +315,7 @@ Use one row per reproducible formal run that creates paper-usable tables, figure
 Required fields:
 
 ```csv
-run_id,problem_id,command,entry_script,input_files,parameters,seed,solver,solver_status,warnings,output_tables,output_figures,log_path,started_at,completed_at,run_status,notes
+run_id,problem_id,model_version,command,entry_script,input_files,parameters,seed,solver,solver_status,warnings,output_tables,output_figures,log_path,started_at,completed_at,run_status,superseded_by,notes
 ```
 
 `run_status` values:
@@ -219,6 +324,7 @@ run_id,problem_id,command,entry_script,input_files,parameters,seed,solver,solver
 - `partial`
 - `failed`
 - `blocked`
+- `deprecated`
 
 A `result_registry.csv` or `figure_evidence.csv` row is not paper-ready unless its `run_id` exists in `run_record.csv` and `run_status=completed`, or the row explicitly cites a non-computational checked source.
 
@@ -234,6 +340,8 @@ diagnostic_id,run_id,subquestion,artifact,check_type,metric,value,threshold,stat
 
 Common `check_type` values: `scaling`, `condition number`, `solver warning`, `constraint violation`, `tolerance sweep`, `multi-seed`, `baseline comparison`.
 
+If the model is classification, ranking, graph, rule-based, or qualitative evaluation and has no solver, matrix, tolerance, stochastic, or discretization risk, write `status=non_applicable` with `not_applicable_reason`; do not invent matrix condition numbers, solver gaps, or tolerances for non-numerical routes. Use indicator direction checks, rank stability, graph feasibility, coverage, or consistency checks instead.
+
 A tolerance-sensitive result is not paper-ready while open P0/P1 diagnostics remain or while no diagnostic row exists for a known numerical risk.
 
 ## `figure_evidence.csv`
@@ -241,6 +349,8 @@ A tolerance-sensitive result is not paper-ready while open P0/P1 diagnostics rem
 Use one row per generated figure that supports a paper claim. The schema and figure-specific validation rules are defined in [figure-evidence-rules.md](figure-evidence-rules.md).
 
 Only `validation_status=paper_ready` figure rows may support abstract, conclusion, or highlight claims.
+
+Required visual check fields include `figure_id`, `render_check_status`, `human_visual_check`, and `visual_check_note`. `paper_ready` requires either `render_check_status=passed` or `human_visual_check=passed` at final paper size.
 
 ## `claim_ledger.csv`
 
@@ -302,6 +412,18 @@ audit_id,claim_id,artifact_a,location_a,artifact_b,location_b,mismatch_type,expe
 Common `mismatch_type` values: `value`, `unit`, `scenario`, `baseline`, `denominator`, `rank`, `feasibility`, `certainty`, `validation_status`, `missing_evidence`, `stale_template`, `ai_disclosure`.
 
 Final abstract, conclusion, and package readiness are blocked while P0/P1 consistency rows remain open.
+
+## `review_pass_items.csv`
+
+Use this lightweight file when `math-review`, `math-verifier`, or `math-consistency` runs a final gate and needs to prove what passed, not only what failed.
+
+Required fields:
+
+```csv
+pass_item_id,source_module,claim_id,file,location,value,constraint_direction,expected,observed,evidence_ref,status,notes
+```
+
+`status` values: `passed`, `blocked`, `diagnostic-only`. A final-gate verdict needs at least five `passed` rows with concrete file, location, value, constraint_direction, and observed evidence.
 
 ## `ai_usage_log.md`
 
